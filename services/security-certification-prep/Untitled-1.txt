@@ -1,0 +1,91 @@
+# BytesEncrypt Technologies — Offensive Security & Assurance
+
+[BytesEncryptTechnologies Pvt Ltd](https://bytesencrypt.com/index.html)
+[Home](https://bytesencrypt.com/index.html)
+[Solutions](https://bytesencrypt.com/solutions.html)
+[About Us](https://bytesencrypt.com/about.html)
+[Blog](https://bytesencrypt.com/blog.php)
+[Request Assessment](https://bytesencrypt.com/index.html#contact)
+Live security monitoring, plain-language reporting
+
+# A health check for your entire attack surface.
+BytesEncrypt Technologies is an offensive security and assurance partner. We monitor for the signal in the noise — testing apps, networks, cloud and people, then telling you exactly what to fix.
+[Request an assessment](https://bytesencrypt.com/#contact)
+[View solutions](https://bytesencrypt.com/solutions.html)
+SCANNING SURFACE...
+
+#### Application
+WEB · API · MOBILE
+
+#### Network
+INFRA · WI-FI · EDGE
+
+#### Cloud
+AWS · AZURE · GCP
+
+#### People
+PHISHING · SOCIAL ENG.
+[Solutions
+              Complete security coverage — VAPT audits, threat monitoring, ransomware prevention, cloud security & 24/7 incident response engineered for enterprises.](https://bytesencrypt.com/solutions.html)
+
+### Solutions
+Complete security coverage — VAPT audits, threat monitoring, ransomware prevention, cloud security & 24/7 incident response engineered for enterprises.
+
+### Trainings
+Hands-on cybersecurity sessions with labs — Ethical Hacking, SOC, DFIR, Malware Analysis, Network Defense and Red/Blue Team practical programs.
+
+### Bootcamps
+Real attack labs, mentorship, certifications and job assistance — designed to turn learners into cyber professionals ready for industry challenges.
+Our Approach
+
+## How an engagement runs, start to retest
+Four stages, always in this order — no shortcuts on the retest.
+
+### Scope & Recon
+We map the attack surface with you — assets, entry points, and what "success" looks like for an attacker.
+
+### Assess & Exploit
+Manual testing led by our team, backed by tooling — chasing real exploit paths, not just scanner output.
+
+### Report Findings
+Severity-rated findings with reproduction steps and remediation guidance your engineers can use.
+
+### Retest & Verify
+Once fixes ship, we retest the same findings and confirm closure before the file is closed.
+Why BytesEncrypt
+
+## Clarity, not just a scan report
+Three things every engagement holds to, regardless of scope.
+
+#### Manual-first testing
+Automated scanners find the obvious. Our testers chase the exploit paths a scanner can't see.
+
+#### Plain-language reports
+Every finding is written for the engineer who has to fix it, not just the auditor who has to file it.
+
+#### Retest included
+We don't close a finding until we've verified the fix ourselves — no separate line item for that.
+Get Started
+
+## Ready for your first checkup?
+Tell us what to scope — an app, a network, a cloud environment, or your whole estate. We'll come back with a plan and timeline, not a sales deck.
+Your request is sent straight to our team — no CRM in the middle.
+[BytesEncryptTechnologies Pvt Ltd](https://bytesencrypt.com/index.html)
+Offensive security and assurance partner for enterprises — VAPT, red teaming, code review, cloud security and cyber risk advisory.
+
+##### Company
+[Home](https://bytesencrypt.com/index.html)
+[Solutions](https://bytesencrypt.com/solutions.html)
+[About Us](https://bytesencrypt.com/about.html)
+[Blog](https://bytesencrypt.com/blog.php)
+[Approach](https://bytesencrypt.com/index.html#approach)
+[Why Us](https://bytesencrypt.com/index.html#why)
+[Contact](https://bytesencrypt.com/index.html#contact)
+
+##### Contact
+Email: contact@bytesencrypt.com
+Phone: +91 9113962011
+Kalyan Nagar, Bangalore, KAR-560043
+[Approach](https://bytesencrypt.com/index.html#approach)
+[Why Us](https://bytesencrypt.com/index.html#why)
+[Contact](https://bytesencrypt.com/index.html#contact)

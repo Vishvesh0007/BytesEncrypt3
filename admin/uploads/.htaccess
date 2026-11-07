@@ -1,0 +1,16 @@
+# Block direct execution of PHP files uploaded into this folder.
+# (The previous version's "AddHandler cgi-script" + "Options -ExecCGI" lines
+# are a common cause of a site-wide 500 on LiteSpeed and PHP-FPM hosts —
+# removed here in favor of the simpler, broadly-supported block below.)
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(php|phtml|php\d|phar)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(php|phtml|php\d|phar)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>

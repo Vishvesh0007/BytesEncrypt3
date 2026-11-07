@@ -1,0 +1,6066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bytes Encrypt — Offensive Security & Compliance for Growing Companies</title>
+  <script src="libs/hls.min.js"></script>
+  <link rel="stylesheet" href="libs/gradient-text.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+    /* Cerebrium Official Typography Fonts */
+    @font-face {
+      font-family: 'ABC Favorit Trial';
+      src: url('/fonts/ABCFavorit-Light.woff2') format('woff2'),
+           url('fonts/ABCFavorit-Light.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'ABC Favorit Trial';
+      src: url('/fonts/ABCFavorit-Light.woff2') format('woff2'),
+           url('fonts/ABCFavorit-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'ABC Favorit Trial';
+      src: url('/fonts/ABCFavorit-Light.woff2') format('woff2'),
+           url('fonts/ABCFavorit-Light.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'ABC Favorit Trial';
+      src: url('/fonts/ABCFavorit-Light.woff2') format('woff2'),
+           url('fonts/ABCFavorit-Light.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Suisse Int\'l';
+      src: url('/fonts/SuisseIntl-Regular.woff2') format('woff2'),
+           url('fonts/SuisseIntl-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Suisse Int\'l';
+      src: url('/fonts/SuisseIntl-Semibold.woff2') format('woff2'),
+           url('fonts/SuisseIntl-Semibold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Suisse Int\'l';
+      src: url('/fonts/SuisseIntl-Semibold.woff2') format('woff2'),
+           url('fonts/SuisseIntl-Semibold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Suisse Int\'l Mono';
+      src: url('/fonts/SuisseIntlMono-Regular.woff2') format('woff2'),
+           url('fonts/SuisseIntlMono-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --ink: #12141C;
+      --paper: #EEF0F4;
+      --paper-2: #FFFFFF;
+      --line: #D7DAE2;
+      --muted: #5B5F6B;
+      --accent: #F9B318;
+      /* signal sun yellow */
+      --accent-2: #1F8A70;
+      /* cipher teal */
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --display: 'Space Grotesk', 'Inter', sans-serif;
+      --body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: var(--accent-2);
+      display: inline-block;
+    }
+
+    /* NAV */
+    header.site {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(238, 240, 244, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: 'Suisse Int\'l Mono', 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 13.5px;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    .logo .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 1px;
+      transform: rotate(45deg);
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 32px;
+      font-family: 'Suisse Int\'l', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 450;
+      letter-spacing: -0.01em;
+      color: var(--muted);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navlinks a {
+      text-decoration: none;
+      color: var(--muted);
+      transition: color .15s ease;
+      font-family: inherit;
+      font-weight: inherit;
+    }
+
+    .navlinks a:hover {
+      color: var(--ink);
+    }
+
+    .navcta {
+      position: relative;
+      font-family: 'Suisse Int\'l', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      padding: 9px 20px;
+      background: #D4FF24;
+      color: #0A0D14;
+      border: 1px solid #C4ED20;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 
+        0 1px 2px rgba(10, 13, 20, 0.08),
+        0 4px 12px rgba(212, 255, 36, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .navcta::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 8px;
+      border: 1.5px solid transparent;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .navcta:hover {
+      background: #DEFF47;
+      border-color: #D4FF24;
+      color: #05070A;
+      transform: translateY(-2px);
+      box-shadow: 
+        0 2px 4px rgba(10, 13, 20, 0.08),
+        0 8px 24px rgba(212, 255, 36, 0.55),
+        0 0 16px rgba(212, 255, 36, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.14);
+    }
+
+    .navcta:hover::before {
+      border-color: rgba(212, 255, 36, 0.45);
+      inset: -3px;
+    }
+
+    .navcta:active {
+      transform: translateY(0);
+      box-shadow: 
+        0 1px 3px rgba(10, 13, 20, 0.15),
+        0 3px 10px rgba(212, 255, 36, 0.35),
+        inset 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width:1000px) {
+      .navlinks {
+        display: none;
+      }
+    }
+
+    /* HERO WITH GRADIENT ASCII BACKGROUND */
+    .hero {
+      padding: 70px 0 60px;
+      position: relative;
+      overflow: hidden;
+      background: #060810;
+      color: #FFFFFF;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .hero-ascii-wrap {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: auto;
+      z-index: 0;
+    }
+
+    .gradient-ascii-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .gradient-ascii-canvas {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 40%, rgba(6, 9, 18, 0.08) 0%, rgba(6, 9, 18, 0.28) 75%, rgba(6, 9, 18, 0.50) 100%),
+        linear-gradient(180deg, rgba(6, 9, 18, 0.15) 0%, transparent 40%, rgba(6, 9, 18, 0.35) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+      background-image:
+        linear-gradient(rgba(78, 140, 255, 0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.18) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero entrance stagger animations */
+    @keyframes heroFadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    /* CEREBRIUM-INSPIRED HERO TYPOGRAPHY SYSTEM (HERO-SCOPED) */
+    h1.cipher,
+    .hero h1.cipher {
+      font-family: 'ABC Favorit Trial', sans-serif !important;
+      font-weight: 300 !important;
+      font-size: clamp(44px, 5.8vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      margin: 0 auto 28px;
+      max-width: 960px;
+      color: #FFFFFF;
+      text-align: center;
+      text-wrap: balance;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+    }
+
+    h1.cipher .decrypted {
+      color: #FFFFFF;
+      font-family: 'ABC Favorit Trial', sans-serif !important;
+      font-weight: 300 !important;
+    }
+
+    h1.cipher .scramble,
+    .hero .scramble,
+    .hero .gradient-text,
+    .hero .gradient-text__inner,
+    .hero .gradient-text__content,
+    .hero .gradient-text__glow {
+      font-family: 'ABC Favorit Trial', sans-serif !important;
+      font-weight: 300 !important;
+      letter-spacing: -0.025em;
+    }
+
+    h1.cipher .scramble {
+      color: #D4FF24;
+      display: inline-block;
+      margin-top: 4px;
+      word-spacing: normal;
+    }
+
+    .hero p.lede {
+      font-family: 'Suisse Int\'l', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-size: clamp(16.5px, 1.3vw, 18px);
+      line-height: 1.48;
+      color: #94A3B8;
+      max-width: 660px;
+      margin: 0 auto 36px;
+      text-align: center;
+      font-weight: 400 !important;
+      letter-spacing: 0.01em;
+      text-wrap: balance;
+      -webkit-font-smoothing: antialiased;
+      animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s backwards;
+    }
+
+    @media (max-width: 768px) {
+      h1.cipher,
+      .hero h1.cipher {
+        font-size: clamp(34px, 8.8vw, 46px);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin-bottom: 22px;
+      }
+
+      .hero p.lede {
+        font-size: 15.5px;
+        line-height: 1.5;
+        margin-bottom: 30px;
+      }
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0;
+      animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s backwards;
+    }
+
+    .hero .btn-primary {
+      font-family: 'Suisse Int\'l', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-size: 14px;
+      font-weight: 600 !important;
+      line-height: 1;
+      letter-spacing: -0.015em;
+      -webkit-font-smoothing: antialiased;
+      background: #D4FF24;
+      color: #0A0D14;
+      border: 1px solid #D4FF24;
+      padding: 14px 26px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+
+    .hero .btn-primary:hover {
+      background: #E0FF52;
+      border-color: #E0FF52;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212, 255, 36, 0.35);
+    }
+
+    .hero .btn-secondary {
+      font-family: 'Suisse Int\'l', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-size: 14px;
+      font-weight: 600 !important;
+      line-height: 1;
+      letter-spacing: -0.015em;
+      -webkit-font-smoothing: antialiased;
+      color: #FFFFFF;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 14px 24px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: border-color .15s ease, background .15s ease, transform .15s ease;
+    }
+
+    .hero .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 14px;
+      background: var(--ink);
+      color: var(--paper-2);
+      padding: 14px 22px;
+      border-radius: 3px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-2);
+      transform: translateY(-1px);
+    }
+
+    /* Secondary hero button declaration removed as it was duplicate */
+
+    .btn-secondary {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--ink);
+      padding: 14px 22px;
+      border-radius: 3px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      transition: border-color .15s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--ink);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      max-width: 640px;
+    }
+
+    .hero-stats div {
+      background: var(--paper-2);
+      padding: 18px 20px;
+    }
+
+    .hero-stats .num {
+      font-family: var(--mono);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+
+    .hero-stats .lbl {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* STATS COUNTER STRIP (GRADIENT & GRID MATCHING HERO) */
+    .stats-strip {
+      background-color: #060810;
+      background-image:
+        radial-gradient(ellipse 75% 70% at 75% 40%, rgba(78, 140, 255, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 65% 80% at 20% 50%, rgba(30, 58, 138, 0.28) 0%, rgba(6, 9, 18, 0.4) 60%, transparent 100%),
+        linear-gradient(90deg, rgba(6, 9, 18, 0.85) 0%, rgba(6, 10, 22, 0.60) 50%, rgba(6, 10, 22, 0.75) 100%),
+        linear-gradient(rgba(78, 140, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.08) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 64px 64px, 64px 64px;
+      background-position: center center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 10;
+    }
+
+    .stats-counter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 38px 0;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 0;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.12);
+      flex-shrink: 0;
+    }
+
+    .stat-item .stat-num-wrap {
+      font-family: var(--mono);
+      font-size: clamp(36px, 4.4vw, 52px);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: baseline;
+      white-space: nowrap;
+    }
+
+    .stat-item .stat-unit {
+      font-size: 0.75em;
+      color: var(--accent);
+      margin-left: 2px;
+    }
+
+    .stat-item .stat-desc {
+      font-size: 14px;
+      line-height: 1.45;
+      color: #94A3B8;
+      max-width: 210px;
+    }
+
+    @media (max-width:860px) {
+      .stats-counter-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 26px;
+        padding: 30px 0;
+      }
+
+      .stat-divider {
+        display: none;
+      }
+
+      .stat-item {
+        width: 100%;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .stat-item:first-child {
+        border-top: none;
+        padding-top: 0;
+      }
+
+      .stat-item .stat-desc {
+        max-width: none;
+      }
+    }
+
+    /* TRUST STRIP (HORIZONTALLY MOVING MARQUEE) */
+    .trust {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .trust-marquee-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+    }
+
+    .trust-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 26s linear infinite;
+    }
+
+    .trust-marquee-wrapper:hover .trust-track {
+      animation-play-state: paused;
+    }
+
+    .trust-group {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      padding-right: 64px;
+      flex-shrink: 0;
+    }
+
+    .trust-item {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(21px, 2.1vw, 26px);
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      opacity: 0.72;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: opacity .2s ease, transform .2s ease, color .2s ease;
+    }
+
+    .trust-item:hover {
+      opacity: 1;
+      color: var(--accent-2);
+      transform: translateY(-1px);
+    }
+
+    .trust-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.7;
+      margin-left: 64px;
+    }
+
+    @keyframes marqueeScroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* SECTION SHARED */
+    section {
+      padding: 88px 0;
+    }
+
+    /* WHO WE ARE / DEFENSE SOLUTIONS SECTION */
+    .who-we-are-section {
+      background: #060810;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 100px 0;
+    }
+
+    .who-we-are-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 65% 55% at 20% 50%, rgba(30, 58, 138, 0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 50% at 85% 45%, rgba(212, 255, 36, 0.05) 0%, transparent 65%),
+        linear-gradient(rgba(78, 140, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .who-we-are-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .who-we-are-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .who-we-are-glow {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(78, 140, 255, 0.28) 0%, rgba(30, 58, 138, 0.15) 45%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+      animation: pulseGlow 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.65;
+      }
+      100% {
+        transform: scale(1.08);
+        opacity: 0.95;
+      }
+    }
+
+    .who-we-are-img-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 540px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .who-we-are-img-wrap:hover {
+      transform: translateY(-4px) scale(1.01);
+    }
+
+    .who-we-are-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 30px rgba(78, 140, 255, 0.18));
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .who-we-are-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .who-we-are-eyebrow {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .who-we-are-eyebrow .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D4FF24;
+      box-shadow: 0 0 8px #D4FF24;
+    }
+
+    .who-we-are-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-weight: 700;
+      font-size: clamp(32px, 3.6vw, 44px);
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+      margin: 0 0 20px;
+    }
+
+    .who-we-are-desc {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: #94A3B8;
+      margin: 0 0 28px;
+      max-width: 520px;
+    }
+
+    .who-we-are-subtitle {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 16.5px;
+      font-weight: 600;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+      margin: 0 0 18px;
+    }
+
+    .who-we-are-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 34px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .who-we-are-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 14.5px;
+      color: #E2E8F0;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      transition: transform 0.18s ease, color 0.18s ease;
+    }
+
+    .who-we-are-item:hover {
+      color: #FFFFFF;
+      transform: translateX(3px);
+    }
+
+    .who-we-are-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(212, 255, 36, 0.12);
+      border: 1px solid rgba(212, 255, 36, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #D4FF24;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .who-we-are-item:hover .who-we-are-check {
+      background: #D4FF24;
+      border-color: #D4FF24;
+      color: #0A0D14;
+      box-shadow: 0 0 12px rgba(212, 255, 36, 0.5);
+    }
+
+    .who-we-are-check svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .who-we-are-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: #D4FF24;
+      color: #0A0D14;
+      border: 1px solid #D4FF24;
+      border-radius: 6px;
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      text-decoration: none;
+      box-shadow:
+        0 1px 2px rgba(10, 13, 20, 0.08),
+        0 4px 16px rgba(212, 255, 36, 0.28);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .who-we-are-cta:hover {
+      background: #DEFF47;
+      border-color: #DEFF47;
+      color: #05070A;
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 20px rgba(212, 255, 36, 0.45),
+        0 0 16px rgba(212, 255, 36, 0.35);
+    }
+
+    .who-we-are-cta svg {
+      width: 15px;
+      height: 15px;
+      transition: transform 0.2s ease;
+    }
+
+    .who-we-are-cta:hover svg {
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 960px) {
+      .who-we-are-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .who-we-are-visual {
+        order: -1;
+      }
+      .who-we-are-img-wrap {
+        max-width: 440px;
+        margin: 0 auto;
+      }
+      .who-we-are-glow {
+        width: 320px;
+        height: 320px;
+      }
+    }
+
+    /* WEB SECURITY PROTOCOLS SECTION */
+    .protocols-section {
+      background: #080B14;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 96px 0;
+    }
+
+    .protocols-bg-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 720px;
+      height: 360px;
+      background: radial-gradient(ellipse at top, rgba(78, 140, 255, 0.14) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .protocols-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 56px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .protocols-eyebrow {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .protocols-eyebrow .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D4FF24;
+      box-shadow: 0 0 8px #D4FF24;
+    }
+
+    .protocols-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-weight: 700;
+      font-size: clamp(30px, 3.8vw, 46px);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+      margin: 0;
+    }
+
+    .protocols-title .brand-accent {
+      color: #D4FF24;
+      display: block;
+      margin-top: 6px;
+      text-shadow: 0 0 24px rgba(212, 255, 36, 0.28);
+    }
+
+    .protocols-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .protocol-card {
+      position: relative;
+      background: rgba(15, 20, 32, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 14px;
+      padding: 34px 28px 30px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+      isolation: isolate;
+    }
+
+    .protocol-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 0%, rgba(212, 255, 36, 0.08), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .protocol-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(212, 255, 36, 0.45);
+      background: rgba(18, 25, 40, 0.95);
+      box-shadow: 
+        0 14px 34px rgba(0, 0, 0, 0.45),
+        0 0 20px rgba(212, 255, 36, 0.12);
+    }
+
+    .protocol-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Featured / Center Card subtle highlight */
+    .protocol-card.featured {
+      border-color: rgba(212, 255, 36, 0.28);
+      background: rgba(17, 24, 38, 0.9);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+    }
+
+    /* Watermark background numbers: 01, 02, 03 */
+    .protocol-watermark {
+      position: absolute;
+      bottom: -15px;
+      right: 12px;
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-size: 130px;
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(255, 255, 255, 0.025);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .protocol-card:hover .protocol-watermark {
+      color: rgba(212, 255, 36, 0.05);
+      transform: scale(1.04);
+    }
+
+    .protocol-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(212, 255, 36, 0.12);
+      border: 1px solid rgba(212, 255, 36, 0.35);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #D4FF24;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      transition: all 0.25s ease;
+    }
+
+    .protocol-card:hover .protocol-icon-wrap {
+      background: #D4FF24;
+      border-color: #D4FF24;
+      color: #0A0D14;
+      box-shadow: 0 0 16px rgba(212, 255, 36, 0.5);
+      transform: scale(1.05);
+    }
+
+    .protocol-icon-wrap svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .protocol-name {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.32;
+      color: #FFFFFF;
+      letter-spacing: -0.015em;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .protocol-desc {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #94A3B8;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 960px) {
+      .protocols-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .protocol-card {
+        padding: 28px 22px;
+      }
+      .protocol-watermark {
+        font-size: 105px;
+        bottom: -10px;
+      }
+    }
+
+    /* CONTINUOUS DEFENSE / PROTECTING TECHNOLOGY HERO BANNER */
+    .defense-banner-section {
+      position: relative;
+      background: #060810;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 90px 0;
+    }
+
+    .defense-banner-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .defense-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+      display: block;
+      filter: brightness(0.85) contrast(1.08);
+      transform: scale(1.02);
+      transition: transform 0.8s ease;
+    }
+
+    .defense-banner-section:hover .defense-banner-img {
+      transform: scale(1.04);
+    }
+
+    /* Ambient cyber overlays with subtle grid */
+    .defense-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, #060810 0%, rgba(6, 8, 16, 0.94) 38%, rgba(6, 8, 16, 0.72) 65%, rgba(6, 8, 16, 0.35) 100%),
+        linear-gradient(180deg, rgba(6, 8, 16, 0.6) 0%, transparent 40%, rgba(6, 8, 16, 0.85) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .defense-banner-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(78, 140, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .defense-banner-content {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
+    }
+
+    .defense-banner-eyebrow {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .defense-banner-eyebrow .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D4FF24;
+      box-shadow: 0 0 8px #D4FF24;
+    }
+
+    .defense-banner-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-weight: 700;
+      font-size: clamp(32px, 3.8vw, 48px);
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+      margin: 0 0 20px;
+    }
+
+    .defense-banner-desc {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 16px;
+      line-height: 1.62;
+      color: #94A3B8;
+      margin: 0 0 32px;
+      max-width: 520px;
+    }
+
+    .defense-banner-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: #D4FF24;
+      color: #0A0D14;
+      border: 1px solid #D4FF24;
+      border-radius: 6px;
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      text-decoration: none;
+      box-shadow:
+        0 1px 2px rgba(10, 13, 20, 0.08),
+        0 4px 16px rgba(212, 255, 36, 0.28);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .defense-banner-cta:hover {
+      background: #DEFF47;
+      border-color: #DEFF47;
+      color: #05070A;
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 20px rgba(212, 255, 36, 0.45),
+        0 0 18px rgba(212, 255, 36, 0.35);
+    }
+
+    .defense-banner-cta svg {
+      width: 15px;
+      height: 15px;
+      transition: transform 0.2s ease;
+    }
+
+    .defense-banner-cta:hover svg {
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 768px) {
+      .defense-banner-section {
+        padding: 70px 0;
+        min-height: auto;
+      }
+      .defense-banner-overlay {
+        background:
+          linear-gradient(180deg, rgba(6, 8, 16, 0.92) 0%, rgba(6, 8, 16, 0.88) 100%);
+      }
+      .defense-banner-content {
+        max-width: 100%;
+      }
+    }
+
+    /* OUR SERVICES / SECURITY PRIORITIES 3-COLUMN SECTION */
+    .services-overview-section {
+      background: #080B14;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      padding: 104px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .services-overview-bg-mesh {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 60% 50% at 15% 45%, rgba(30, 58, 138, 0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 60% at 85% 55%, rgba(212, 255, 36, 0.035) 0%, transparent 60%),
+        linear-gradient(rgba(78, 140, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.035) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .services-overview-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    /* Left Column: Title, Subtitle & Support Widget */
+    .services-overview-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .services-overview-eyebrow {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .services-overview-eyebrow .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D4FF24;
+      box-shadow: 0 0 8px #D4FF24;
+    }
+
+    .services-overview-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-weight: 700;
+      font-size: clamp(30px, 3.4vw, 44px);
+      line-height: 1.16;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+      margin: 0 0 20px;
+    }
+
+    .services-overview-desc {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 15.5px;
+      line-height: 1.62;
+      color: #94A3B8;
+      margin: 0 0 36px;
+      max-width: 460px;
+    }
+
+    /* Client Support Callout Widget */
+    .services-support-callout {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      width: fit-content;
+    }
+
+    .services-support-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #D4FF24;
+      color: #0A0D14;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(212, 255, 36, 0.35);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .services-support-callout:hover .services-support-icon {
+      transform: scale(1.06);
+      box-shadow: 0 6px 22px rgba(212, 255, 36, 0.55);
+    }
+
+    .services-support-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .services-support-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .services-support-lbl {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #94A3B8;
+    }
+
+    .services-support-phone {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-size: 21px;
+      font-weight: 700;
+      color: #FFFFFF;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color 0.18s ease;
+    }
+
+    .services-support-phone:hover {
+      color: #D4FF24;
+    }
+
+    /* Center Column: Interactive Visual Frame */
+    .services-overview-center {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .services-center-frame {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        0 24px 50px rgba(0, 0, 0, 0.65),
+        0 0 24px rgba(78, 140, 255, 0.14);
+      background: #0B0F19;
+      aspect-ratio: 4 / 4.7;
+    }
+
+    .services-center-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    }
+
+    .services-center-frame:hover .services-center-img {
+      transform: scale(1.05);
+      filter: contrast(1.08) brightness(1.03);
+    }
+
+    .services-center-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(6, 8, 16, 0.75) 100%);
+      pointer-events: none;
+    }
+
+    /* Right Column: Stacked Service Feature Cards */
+    .services-overview-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .service-feature-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 20px 22px;
+      background: rgba(15, 20, 32, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .service-feature-card:hover {
+      transform: translateX(6px);
+      background: rgba(18, 25, 42, 0.95);
+      border-color: rgba(212, 255, 36, 0.4);
+      box-shadow: 
+        0 10px 26px rgba(0, 0, 0, 0.4),
+        0 0 16px rgba(212, 255, 36, 0.1);
+    }
+
+    .service-feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(212, 255, 36, 0.12);
+      border: 1px solid rgba(212, 255, 36, 0.35);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #D4FF24;
+      flex-shrink: 0;
+      transition: all 0.22s ease;
+    }
+
+    .service-feature-card:hover .service-feature-icon {
+      background: #D4FF24;
+      border-color: #D4FF24;
+      color: #0A0D14;
+      box-shadow: 0 0 14px rgba(212, 255, 36, 0.5);
+      transform: scale(1.05);
+    }
+
+    .service-feature-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .service-feature-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .service-feature-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-size: 17.5px;
+      font-weight: 600;
+      color: #FFFFFF;
+      letter-spacing: -0.015em;
+      margin: 0;
+      transition: color 0.18s ease;
+    }
+
+    .service-feature-card:hover .service-feature-title {
+      color: #FFFFFF;
+    }
+
+    .service-feature-desc {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 13.8px;
+      line-height: 1.55;
+      color: #94A3B8;
+      margin: 0;
+    }
+
+    @media (max-width: 1040px) {
+      .services-overview-grid {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+      .services-center-frame {
+        max-width: 420px;
+        margin: 0 auto;
+        aspect-ratio: 16 / 10;
+      }
+    }
+
+    /* WHAT WE OFFER 6-CARD GRID SECTION */
+    .what-we-offer-section {
+      background: #060810;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      padding: 108px 0 116px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .what-we-offer-bg-fx {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 70% 50% at 50% 15%, rgba(78, 140, 255, 0.08) 0%, transparent 65%),
+        linear-gradient(rgba(78, 140, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .what-we-offer-header {
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto 58px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .what-we-offer-eyebrow {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .what-we-offer-eyebrow .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D4FF24;
+      box-shadow: 0 0 8px #D4FF24;
+    }
+
+    .what-we-offer-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-weight: 700;
+      font-size: clamp(30px, 3.8vw, 46px);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+      margin: 0;
+    }
+
+    .what-we-offer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .offer-card {
+      background: rgba(15, 20, 32, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+      isolation: isolate;
+    }
+
+    .offer-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at 25% 0%, rgba(212, 255, 36, 0.07), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .offer-card:hover {
+      transform: translateY(-5px);
+      background: rgba(18, 25, 42, 0.96);
+      border-color: rgba(212, 255, 36, 0.42);
+      box-shadow:
+        0 16px 36px rgba(0, 0, 0, 0.45),
+        0 0 22px rgba(212, 255, 36, 0.12);
+    }
+
+    .offer-card:hover::before {
+      opacity: 1;
+    }
+
+    .offer-card-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .offer-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(212, 255, 36, 0.12);
+      border: 1px solid rgba(212, 255, 36, 0.35);
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.24s ease;
+    }
+
+    .offer-card:hover .offer-icon-box {
+      background: #D4FF24;
+      border-color: #D4FF24;
+      color: #0A0D14;
+      box-shadow: 0 0 16px rgba(212, 255, 36, 0.5);
+      transform: scale(1.05);
+    }
+
+    .offer-icon-box svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .offer-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .offer-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-size: 19px;
+      font-weight: 600;
+      color: #FFFFFF;
+      letter-spacing: -0.015em;
+      margin: 0;
+    }
+
+    .offer-tagline {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: #94A3B8;
+      letter-spacing: 0.02em;
+    }
+
+    .offer-desc {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 14.5px;
+      line-height: 1.62;
+      color: #94A3B8;
+      margin: 0 0 26px;
+      position: relative;
+      z-index: 1;
+      flex-grow: 1;
+    }
+
+    .offer-learn-more {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #D4FF24;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+      width: fit-content;
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .offer-learn-more svg {
+      width: 13px;
+      height: 13px;
+      transition: transform 0.2s ease;
+    }
+
+    .offer-card:hover .offer-learn-more {
+      color: #DEFF47;
+      transform: translateX(2px);
+    }
+
+    .offer-card:hover .offer-learn-more svg {
+      transform: translate(2px, -2px);
+    }
+
+    @media (max-width: 980px) {
+      .what-we-offer-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .offer-card {
+        padding: 26px 22px;
+      }
+    }
+
+    /* SECURING YOUR ONLINE PRESENCE (SKILL & PROGRESS METRICS HERO BANNER) */
+    .securing-presence-section {
+      position: relative;
+      background: #060810;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 96px 0;
+    }
+
+    .securing-presence-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .securing-presence-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+      display: block;
+      filter: brightness(0.8) contrast(1.1);
+      transform: scale(1.02);
+      transition: transform 0.8s ease;
+    }
+
+    .securing-presence-section:hover .securing-presence-img {
+      transform: scale(1.04);
+    }
+
+    .securing-presence-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, #060810 0%, rgba(6, 8, 16, 0.95) 42%, rgba(6, 8, 16, 0.72) 68%, rgba(6, 8, 16, 0.38) 100%),
+        linear-gradient(180deg, rgba(6, 8, 16, 0.65) 0%, transparent 40%, rgba(6, 8, 16, 0.9) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .securing-presence-grid-fx {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(78, 140, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .securing-presence-content {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
+    }
+
+    .securing-presence-eyebrow {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .securing-presence-eyebrow .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D4FF24;
+      box-shadow: 0 0 8px #D4FF24;
+    }
+
+    .securing-presence-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-weight: 700;
+      font-size: clamp(32px, 3.8vw, 46px);
+      line-height: 1.16;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+      margin: 0 0 18px;
+    }
+
+    .securing-presence-desc {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 15.5px;
+      line-height: 1.62;
+      color: #94A3B8;
+      margin: 0 0 34px;
+      max-width: 520px;
+    }
+
+    /* Progress Metric Bars Stack */
+    .securing-progress-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .securing-progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .securing-progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+
+    .securing-progress-pct {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: #D4FF24;
+      letter-spacing: 0.02em;
+    }
+
+    .securing-progress-track {
+      position: relative;
+      width: 100%;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .securing-progress-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, #10B981 0%, #D4FF24 100%);
+      box-shadow: 0 0 12px rgba(212, 255, 36, 0.45);
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (max-width: 768px) {
+      .securing-presence-section {
+        padding: 72px 0;
+        min-height: auto;
+      }
+      .securing-presence-overlay {
+        background:
+          linear-gradient(180deg, rgba(6, 8, 16, 0.94) 0%, rgba(6, 8, 16, 0.9) 100%);
+      }
+      .securing-presence-content {
+        max-width: 100%;
+      }
+    }
+
+    /* FEATURED PROJECTS 6-CARD SECTION */
+    .featured-projects-section {
+      background: #080B14;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      padding: 104px 0 112px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .featured-projects-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 60% 45% at 50% 10%, rgba(78, 140, 255, 0.08) 0%, transparent 65%),
+        linear-gradient(rgba(78, 140, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.035) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .featured-projects-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-projects-eyebrow {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .featured-projects-eyebrow .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D4FF24;
+      box-shadow: 0 0 8px #D4FF24;
+    }
+
+    .featured-projects-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-weight: 700;
+      font-size: clamp(30px, 3.8vw, 46px);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+      margin: 0;
+    }
+
+    .featured-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-card {
+      background: rgba(15, 20, 32, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+      isolation: isolate;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(212, 255, 36, 0.45);
+      background: rgba(18, 25, 42, 0.96);
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.5),
+        0 0 24px rgba(212, 255, 36, 0.12);
+    }
+
+    /* Reserved Image Placeholder Slot */
+    .project-img-placeholder {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: linear-gradient(135deg, #0A0E18 0%, #121826 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-img-placeholder::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(78, 140, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.06) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .placeholder-badge {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(6, 8, 16, 0.7);
+      border: 1px dashed rgba(212, 255, 36, 0.4);
+      border-radius: 100px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #D4FF24;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    /* Floating Round Icon on Top-Left of Image */
+    .project-floating-icon {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(10, 13, 20, 0.85);
+      border: 1px solid rgba(212, 255, 36, 0.4);
+      color: #D4FF24;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      transition: all 0.22s ease;
+    }
+
+    .project-card:hover .project-floating-icon {
+      background: #D4FF24;
+      border-color: #D4FF24;
+      color: #0A0D14;
+      box-shadow: 0 0 16px rgba(212, 255, 36, 0.55);
+      transform: scale(1.06);
+    }
+
+    .project-floating-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Card Content Area */
+    .project-card-body {
+      padding: 26px 26px 28px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-card-title {
+      font-family: 'ABC Favorit Trial', 'Space Grotesk', var(--display);
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.32;
+      color: #FFFFFF;
+      letter-spacing: -0.015em;
+      margin: 0 0 12px;
+    }
+
+    .project-card-desc {
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 14.2px;
+      line-height: 1.6;
+      color: #94A3B8;
+      margin: 0 0 26px;
+      flex-grow: 1;
+    }
+
+    /* Brand CTA Button matching reference button */
+    .project-card-cta {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 22px;
+      background: #D4FF24;
+      color: #0A0D14;
+      border: 1px solid #D4FF24;
+      border-radius: 6px;
+      font-family: 'Suisse Int\'l', var(--body);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(212, 255, 36, 0.25);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card-cta:hover {
+      background: #DEFF47;
+      border-color: #DEFF47;
+      color: #05070A;
+      transform: translateY(-2px);
+      box-shadow: 
+        0 6px 18px rgba(212, 255, 36, 0.45),
+        0 0 14px rgba(212, 255, 36, 0.3);
+    }
+
+    @media (max-width: 980px) {
+      .featured-projects-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .project-card-body {
+        padding: 22px;
+      }
+    }
+
+    h2.section-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(28px, 3.4vw, 40px);
+      line-height: 1.1;
+      margin: 0 0 16px;
+      max-width: 640px;
+    }
+
+    p.section-sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    /* CERTS */
+    .certs {
+      background: var(--paper-2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .cert-grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .cert-card {
+      background: var(--paper-2);
+      padding: 28px 22px;
+    }
+
+    .cert-card .cert-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 14px;
+      color: var(--accent-2);
+    }
+
+    .cert-card .cert-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .cert-card .badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent-2);
+      border: 1px solid var(--accent-2);
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+    }
+
+    .cert-card h4 {
+      font-family: var(--display);
+      font-size: 16px;
+      margin: 0 0 8px;
+    }
+
+    .cert-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    @media (max-width:900px) {
+      .cert-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cert-grid-5 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width:560px) {
+      .cert-grid-5 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SERVICES */
+    .service-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 32px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border-radius: 4px;
+      transition: border-color .15s ease, transform .15s ease;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent-2);
+      transform: translateY(-3px);
+    }
+
+    a.service-card {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .service-card .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 3px;
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .service-card h3 {
+      font-family: var(--display);
+      font-size: 19px;
+      margin: 0;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+      flex: 1;
+    }
+
+    .service-card .price {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent-2);
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    @media (max-width:900px) {
+      .service-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* PROCESS / HOW IT WORKS (SAAS WORKFLOW DEMO) */
+    .process {
+      background-color: #060810;
+      /* Cyber square mesh background */
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center center;
+      color: var(--paper-2);
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 100px 0;
+    }
+
+    /* Vignette & ambient depth over the square mesh */
+    .process::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 20%, rgba(37, 99, 235, 0.14) 0%, rgba(232, 163, 61, 0.05) 45%, transparent 75%),
+        linear-gradient(180deg, #060810 0%, transparent 20%, transparent 80%, #060810 100%);
+      pointer-events: none;
+    }
+
+    .process>.wrap {
+      position: relative;
+      z-index: 2;
+    }
+
+    .process-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 52px;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .process h2.section-title {
+      color: #FFFFFF;
+      margin: 0 0 14px;
+    }
+
+    .process p.section-sub {
+      color: #94A3B8;
+      margin-bottom: 0;
+      font-size: 16.5px;
+    }
+
+    .process-live-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(232, 163, 61, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(232, 163, 61, 0.08);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .process-live-tag .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.8);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* WORKFLOW SECTION & CURVED TIMELINE REDESIGN */
+    .process {
+      background: #060912;
+      color: #FFFFFF;
+      position: relative;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .workflow-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 0;
+    }
+
+    .workflow-intro {
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .workflow-intro .eyebrow {
+      color: #D4FF24;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .workflow-intro .section-title {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      font-size: clamp(32px, 3.8vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+      margin: 0 0 14px;
+    }
+
+    .workflow-intro .section-sub {
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: #94A3B8;
+      margin: 0 0 28px;
+    }
+
+    /* 3D Workflow Illustration Showcase (Left Side) */
+    .workflow-visual-stage {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: radial-gradient(circle at center, rgba(7, 86, 212, 0.18) 0%, rgba(25, 188, 224, 0.05) 45%, rgba(6, 9, 18, 0) 70%);
+      overflow: visible;
+      perspective: 1000px;
+    }
+
+    .workflow-visual-stage::before {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(7, 86, 212, 0.35) 0%, rgba(25, 188, 224, 0.12) 50%, transparent 72%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+      animation: subtleGlowPulse 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes subtleGlowPulse {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    .workflow-visual-slider {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .workflow-3d-img {
+      position: absolute;
+      max-width: 86%;
+      max-height: 90%;
+      aspect-ratio: 4 / 5;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0;
+      transform: translateY(14px) scale(1.02);
+      transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.55));
+    }
+
+    .workflow-3d-img.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      z-index: 2;
+    }
+
+    .workflow-3d-img.prev {
+      opacity: 0;
+      transform: translateY(-14px) scale(0.98);
+      z-index: 1;
+    }
+
+    /* Curved Timeline Container */
+    .curved-timeline-wrap {
+      position: relative;
+      padding: 10px 0 10px 40px;
+    }
+
+    .curved-timeline-svg {
+      position: absolute;
+      left: 15px;
+      top: 24px;
+      bottom: 24px;
+      width: 40px;
+      height: calc(100% - 48px);
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .timeline-path-bg {
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    .timeline-path-active {
+      stroke: #D4FF24;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+      filter: drop-shadow(0 0 6px rgba(212, 255, 36, 0.45));
+    }
+
+    .curved-timeline-stages {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .curved-stage-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid transparent;
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      text-align: left;
+      width: 100%;
+    }
+
+    .curved-stage-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.08);
+      transform: translateX(4px);
+    }
+
+    .curved-stage-item.active {
+      background: rgba(212, 255, 36, 0.05);
+      border-color: rgba(212, 255, 36, 0.25);
+      box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Circular Numbered Indicator with Countdown ring */
+    .stage-indicator {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #0E1524;
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .curved-stage-item.active .stage-indicator {
+      background: #141D2B;
+      border-color: #D4FF24;
+      box-shadow: 0 0 16px rgba(212, 255, 36, 0.35);
+    }
+
+    .indicator-progress-ring {
+      position: absolute;
+      inset: -3px;
+      width: 48px;
+      height: 48px;
+      pointer-events: none;
+      transform: rotate(-90deg);
+    }
+
+    .indicator-progress-ring circle {
+      fill: none;
+      stroke-width: 2.5;
+    }
+
+    .progress-ring-bg {
+      stroke: transparent;
+    }
+
+    .progress-ring-bar {
+      stroke: #D4FF24;
+      stroke-dasharray: 138;
+      stroke-dashoffset: 138;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 3px #D4FF24);
+    }
+
+    .curved-stage-item.active .progress-ring-bar {
+      animation: ringCountdown 5s linear forwards;
+    }
+
+    .curved-timeline-stages:hover .progress-ring-bar {
+      animation-play-state: paused;
+    }
+
+    @keyframes ringCountdown {
+      0% {
+        stroke-dashoffset: 138;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .stage-number {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: #94A3B8;
+      transition: color 0.3s ease;
+    }
+
+    .curved-stage-item.active .stage-number {
+      color: #D4FF24;
+    }
+
+    .stage-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .stage-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stage-cat {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #64748B;
+      transition: color 0.3s ease;
+    }
+
+    .curved-stage-item.active .stage-cat {
+      color: #D4FF24;
+    }
+
+    .stage-heading {
+      font-family: 'Plus Jakarta Sans', var(--display);
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #E2E8F0;
+      line-height: 1.3;
+      margin: 0;
+      transition: color 0.3s ease;
+    }
+
+    .curved-stage-item.active .stage-heading {
+      color: #FFFFFF;
+    }
+
+    .stage-short-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #64748B;
+      margin: 2px 0 0;
+      transition: color 0.3s ease;
+    }
+
+    .curved-stage-item.active .stage-short-desc {
+      color: #94A3B8;
+    }
+
+    /* Responsive adjustments for curved timeline */
+    @media (max-width: 960px) {
+      .workflow-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .workflow-intro {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .workflow-intro .eyebrow {
+        justify-content: center;
+      }
+
+      .workflow-visual-stage {
+        height: 340px;
+      }
+
+      .curved-timeline-wrap {
+        padding-left: 0;
+      }
+
+      .curved-timeline-svg {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .workflow-visual-stage {
+        height: 280px;
+      }
+
+      .flow-display-stage {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-info-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 24px 20px;
+      }
+
+      .curved-stage-item {
+        padding: 10px 12px;
+      }
+
+      .curved-stage-item:hover {
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .workflow-3d-img {
+        transition: opacity 300ms ease;
+        transform: none !important;
+      }
+      .workflow-visual-stage::before {
+        animation: none;
+      }
+    }
+
+    /* TIMELINE TABS BAR */
+    .flow-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: rgba(6, 9, 18, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .flow-tab-btn {
+      background: none;
+      border: none;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px 18px;
+      text-align: left;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease;
+      color: #94A3B8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flow-tab-btn:last-child {
+      border-right: none;
+    }
+
+    /* Progress bar indicator for 5s cycle */
+    .flow-tab-btn .tab-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .flow-tab-btn .tab-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+    }
+
+    .flow-tab-btn.active .tab-progress-bar {
+      animation: tabProgressAnim 5s linear forwards;
+    }
+
+    /* Pause animation on hover */
+    .saas-flow-panel:hover .flow-tab-btn.active .tab-progress-bar {
+      animation-play-state: paused;
+    }
+
+    @keyframes tabProgressAnim {
+      0% {
+        width: 0%;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+    .flow-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.03);
+      color: #FFFFFF;
+    }
+
+    .flow-tab-btn.active {
+      background: rgba(18, 24, 40, 0.7);
+      color: #FFFFFF;
+    }
+
+    .flow-tab-btn .tab-step-n {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .flow-tab-btn .tab-step-title {
+      font-family: var(--display);
+      font-size: 15px;
+      font-weight: 600;
+      color: inherit;
+      margin: 0;
+    }
+
+    /* FLOW STAGE CONTENT GRID */
+    .flow-display-stage {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      min-height: 360px;
+      transition: opacity .22s ease, transform .22s ease;
+    }
+
+    .flow-display-stage.stage-fading {
+      opacity: 0.35;
+      transform: translateY(3px);
+    }
+
+    .flow-info-col {
+      padding: 38px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(9, 13, 24, 0.6);
+    }
+
+    .flow-info-body .flow-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent-2);
+      background: rgba(31, 138, 112, 0.12);
+      border: 1px solid rgba(31, 138, 112, 0.3);
+      padding: 4px 10px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+
+    .flow-info-body h3 {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin: 0 0 12px;
+    }
+
+    .flow-info-body p {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: #94A3B8;
+      margin: 0 0 24px;
+    }
+
+    .flow-deliverables {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .flow-deliverables li {
+      font-size: 13px;
+      color: #E2E8F0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+    }
+
+    .flow-deliverables li::before {
+      content: "✓";
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .flow-cta-hint {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #64748B;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* TERMINAL / INTERACTIVE SAAS CONSOLE */
+    .flow-terminal-col {
+      background: #04060A;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .terminal-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .terminal-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #2A3142;
+    }
+
+    .terminal-dot.red {
+      background: #EF4444;
+    }
+
+    .terminal-dot.yellow {
+      background: #F59E0B;
+    }
+
+    .terminal-dot.green {
+      background: #10B981;
+    }
+
+    .terminal-title {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: #64748B;
+      letter-spacing: 0.04em;
+    }
+
+    .terminal-status {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--accent-2);
+    }
+
+    .terminal-window {
+      padding: 24px 28px;
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.75;
+      color: #CBD5E1;
+      overflow-x: auto;
+    }
+
+    .t-comment {
+      color: #475569;
+    }
+
+    .t-cmd {
+      color: #E2E8F0;
+      font-weight: 600;
+    }
+
+    .t-cmd::before {
+      content: "$ ";
+      color: var(--accent);
+    }
+
+    .t-success {
+      color: var(--accent-2);
+    }
+
+    .t-warn {
+      color: var(--accent);
+    }
+
+    .t-key {
+      color: #93C5FD;
+    }
+
+    .t-val {
+      color: #F1F5F9;
+    }
+
+    @media (max-width:980px) {
+      .flow-tabs {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .flow-tab-btn:nth-child(2n) {
+        border-right: none;
+      }
+
+      .flow-tab-btn:last-child {
+        grid-column: span 2;
+      }
+
+      .flow-display-stage {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-info-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 28px 22px;
+      }
+
+      .terminal-window {
+        padding: 20px;
+      }
+    }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 22px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .faq-q .plus {
+      font-family: var(--mono);
+      color: var(--accent-2);
+      font-size: 18px;
+      transition: transform .2s ease;
+    }
+
+    .faq-item.open .faq-q .plus {
+      transform: rotate(45deg);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .25s ease;
+    }
+
+    .faq-a p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      padding-bottom: 22px;
+      margin: 0;
+      max-width: 680px;
+    }
+
+    /* CTA BAND */
+    .ctaband {
+      position: relative;
+      background: #050714;
+      color: var(--paper-2);
+      text-align: center;
+      padding: 88px 28px;
+      border-radius: 12px;
+      margin: 0 28px;
+      overflow: hidden;
+      border: 1px solid rgba(78, 140, 255, 0.25);
+      box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.7), 0 0 45px -10px rgba(30, 64, 175, 0.25);
+    }
+
+    .ctaband-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .ctaband h2 {
+      font-family: var(--display);
+      font-size: clamp(28px, 3.4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      color: #FFFFFF;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    .ctaband p {
+      font-size: 16.5px;
+      line-height: 1.6;
+      color: #D1D5DB;
+      margin: 0 0 34px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .ctaband .btn-primary {
+      position: relative;
+      z-index: 2;
+      background: #D4FF24;
+      color: #060912;
+      font-weight: 700;
+      border-color: #D4FF24;
+      box-shadow: 0 8px 24px -4px rgba(212, 255, 36, 0.45);
+      transition: all 0.25s ease;
+    }
+
+    .ctaband .btn-primary:hover {
+      background: #E5FF66;
+      border-color: #E5FF66;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -4px rgba(212, 255, 36, 0.65);
+    }
+
+    /* SECURELAYER7 / ENTERPRISE CYBER FOOTER DESIGN */
+    .enterprise-footer {
+      width: 100%;
+      position: relative;
+      background-color: #050814;
+      background-image:
+        radial-gradient(ellipse 70% 60% at 75% 75%, rgba(30, 64, 175, 0.35) 0%, rgba(7, 86, 212, 0.18) 40%, transparent 75%),
+        radial-gradient(ellipse 55% 45% at 20% 65%, rgba(56, 189, 248, 0.14) 0%, transparent 65%),
+        linear-gradient(rgba(78, 140, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 140, 255, 0.07) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      color: #94A3B8;
+      border-top: 1px solid rgba(78, 140, 255, 0.18);
+      overflow: hidden;
+      padding-top: 60px;
+    }
+
+    /* 4-Column Information Grid */
+    .footer-columns-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 40px;
+      padding-bottom: 40px;
+    }
+
+    .footer-brand-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-brand-logo {
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .footer-brand-logo .brand-diamond {
+      width: 9px;
+      height: 9px;
+      background: #F59E0B;
+      transform: rotate(45deg);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+    }
+
+    .footer-brand-desc {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #94A3B8;
+      margin: 0;
+      max-width: 260px;
+    }
+
+    .footer-square-socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .footer-square-btn {
+      width: 36px;
+      height: 36px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(78, 140, 255, 0.22);
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #94A3B8;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .footer-square-btn svg {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
+    }
+
+    .footer-square-btn:hover {
+      background: rgba(30, 64, 175, 0.45);
+      border-color: #38BDF8;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    .footer-col-header {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #E2E8F0;
+      margin: 0 0 18px;
+    }
+
+    .footer-col-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .footer-col-list a {
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.15s ease, transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .footer-col-list a:hover {
+      color: #38BDF8;
+      transform: translateX(2px);
+    }
+
+    .footer-contact-item {
+      color: #94A3B8;
+      font-size: 14px;
+    }
+
+    .accredited-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #38BDF8;
+    }
+
+    .accredited-badges {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .badge-crest, .badge-aicpa, .badge-iso {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Space Grotesk', var(--mono);
+      color: #CBD5E1;
+      opacity: 0.85;
+      transition: opacity 0.2s ease, color 0.2s ease;
+    }
+
+    .badge-crest:hover, .badge-aicpa:hover, .badge-iso:hover {
+      opacity: 1;
+      color: #FFFFFF;
+    }
+
+    .accredited-badges svg {
+      height: 24px;
+      width: auto;
+      fill: currentColor;
+    }
+
+    .footer-social-pillrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-social-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(78, 140, 255, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #CBD5E1;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .footer-social-circle svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+      transition: transform 0.25s ease;
+    }
+
+    .footer-social-circle:hover {
+      background: rgba(30, 64, 175, 0.45);
+      border-color: #38BDF8;
+      color: #38BDF8;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px -3px rgba(30, 64, 175, 0.5);
+    }
+
+    .footer-social-circle:hover svg {
+      transform: scale(1.12);
+    }
+
+    /* Giant Watermark Typography Layer */
+    .footer-giant-watermark-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      user-select: none;
+      padding: 20px 0 0;
+      margin-top: 10px;
+    }
+
+    .footer-giant-watermark {
+      font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(60px, 12.8vw, 190px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(56, 189, 248, 0.14) 45%, rgba(30, 64, 175, 0.03) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0.9;
+      transform: translateY(8px);
+    }
+
+    /* Floating CTA Chat Pill */
+    .footer-chat-pill {
+      position: absolute;
+      right: 28px;
+      bottom: 60px;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #FF5500 0%, #D83B01 100%);
+      color: #FFFFFF;
+      font-family: var(--display);
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 9999px;
+      box-shadow: 0 10px 25px -4px rgba(216, 59, 1, 0.5), 0 0 16px rgba(255, 85, 0, 0.35);
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .footer-chat-pill:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 14px 30px -4px rgba(216, 59, 1, 0.65);
+    }
+
+    .footer-chat-pill svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    /* Final Minimal Footer Copyright Line */
+    .footer-final-copyright-bar {
+      border-top: 1px solid rgba(78, 140, 255, 0.12);
+      padding: 20px 0;
+      margin-top: 16px;
+      text-align: center;
+      background: transparent;
+    }
+
+    .footer-final-copyright {
+      margin: 0;
+      font-size: 13.5px;
+      font-family: var(--body);
+      color: #94A3B8;
+      letter-spacing: 0.01em;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .footer-top-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .footer-sub-grid {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .footer-chat-pill {
+        position: static;
+        margin: 20px auto 0;
+        display: inline-flex;
+      }
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      padding: 20px 0 0;
+      text-align: center;
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--ink);
+    }
+
+    .breadcrumb span {
+      margin: 0 8px;
+    }
+
+    /* SUBPAGE HERO */
+    .subhero {
+      padding: 40px 0 64px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .subhero .icon-lg {
+      width: 52px;
+      height: 52px;
+      border-radius: 4px;
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    .subhero h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(30px, 4.4vw, 50px);
+      line-height: 1.06;
+      margin: 0 0 18px;
+      max-width: 700px;
+    }
+
+    .subhero p.lede {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+      margin: 0 0 30px;
+    }
+
+    /* CONTENT BLOCKS */
+    .content-block {
+      padding: 70px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .content-block:last-of-type {
+      border-bottom: none;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    @media (max-width:860px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .check-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .check-list li::before {
+      content: "→";
+      font-family: var(--mono);
+      color: var(--accent-2);
+      flex-shrink: 0;
+    }
+
+    .stat-box {
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 26px;
+      border-radius: 4px;
+    }
+
+    .stat-box+.stat-box {
+      margin-top: 16px;
+    }
+
+    .stat-box .num {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+
+    .stat-box .lbl {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width:900px) {
+      .tier-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tier-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width:900px) {
+      .tier-grid-4 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width:560px) {
+      .tier-grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tier-card {
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 30px 24px;
+      border-radius: 4px;
+    }
+
+    .tier-card h4 {
+      font-family: var(--display);
+      font-size: 18px;
+      margin: 0 0 6px;
+    }
+
+    .tier-card .tier-price {
+      font-family: var(--mono);
+      color: var(--accent-2);
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+
+    .tier-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tier-card li {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 8px;
+    }
+
+    .tier-card li::before {
+      content: "·";
+      color: var(--accent);
+    }
+
+    /* MEGA SERVICES GRID (homepage) */
+    .mega-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .mega-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mega-cat-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--accent-2);
+    }
+
+    .mega-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+      background: #DCEAE6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent-2);
+      flex-shrink: 0;
+    }
+
+    .mega-cat-head span:last-child {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .mega-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .mega-list a {
+      text-decoration: none;
+      display: block;
+    }
+
+    .mega-item-title {
+      display: block;
+      font-family: var(--display);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink);
+      transition: color .15s ease;
+    }
+
+    .mega-list a:hover .mega-item-title {
+      color: var(--accent-2);
+    }
+
+    .mega-item-blurb {
+      display: block;
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    @media (max-width:900px) {
+      .mega-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width:560px) {
+      .mega-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* NAV HOVER MEGA-MENU */
+    .has-mega {
+      position: relative;
+    }
+
+    .has-mega>a {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .has-mega>a .caret {
+      width: 7px;
+      height: 7px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      margin-top: -3px;
+      transition: transform .15s ease;
+    }
+
+    .has-mega:hover>a .caret {
+      transform: rotate(225deg);
+      margin-top: 3px;
+    }
+
+    .nav-mega {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      width: min(880px, 86vw);
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 18px 40px -12px rgba(18, 20, 28, 0.18);
+      padding: 36px 34px 30px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .16s ease, transform .16s ease;
+      z-index: 60;
+    }
+
+    .has-mega:hover .nav-mega,
+    .has-mega:focus-within .nav-mega {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-mega::before {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 12px;
+      height: 12px;
+      background: var(--paper-2);
+      border-left: 1px solid var(--line);
+      border-top: 1px solid var(--line);
+    }
+
+    .nav-mega .mega-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 26px;
+    }
+
+    .nav-mega .mega-cat-head {
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+    }
+
+    .nav-mega .mega-list {
+      gap: 13px;
+    }
+
+    .nav-mega .mega-cat-head span:last-child {
+      font-family: 'Suisse Int\'l Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-mega .mega-item-title {
+      font-family: 'Suisse Int\'l', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-mega .mega-item-blurb {
+      font-family: 'Suisse Int\'l', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 11.5px;
+    }
+
+    @media (max-width:1000px) {
+      .nav-mega {
+        display: none;
+      }
+    }
+
+    /* MOBILE NAV MENU */
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .mobile-menu-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--ink);
+      transition: transform .2s ease, opacity .2s ease, width .2s ease;
+    }
+
+    .mobile-menu-toggle.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+      width: 100%;
+    }
+
+    .mobile-menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-toggle.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+      width: 100%;
+    }
+
+    /*
+  The panel is a NORMAL block element that sits directly after </header> in the
+  document — not position:fixed/absolute with a calculated offset. This means the
+  browser's own layout places it exactly below the header with zero chance of a
+  gap, on any device, regardless of actual header height, font rendering, or
+  safe-area insets. Because the header is position:sticky, the panel (its very
+  next sibling) always renders right where the header currently sits on screen.
+*/
+    .mobile-menu-panel {
+      display: none;
+    }
+
+    @media (max-width:1000px) {
+      .mobile-menu-toggle {
+        display: flex;
+      }
+
+      .navcta {
+        display: none;
+      }
+
+      .mobile-menu-panel {
+        display: block;
+        box-sizing: border-box;
+        background: var(--paper-2);
+        padding: 0 28px 40px;
+        max-height: 0;
+        min-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height .3s ease, opacity .2s ease;
+      }
+
+      .mobile-menu-panel.open {
+        max-height: 3000px;
+        min-height: 100vh;
+        opacity: 1;
+        overflow-y: auto;
+        padding-top: 20px;
+        transition: max-height .3s ease, opacity .2s ease, padding-top 0s;
+      }
+    }
+
+    .mobile-menu-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu-list>li {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mobile-menu-list>li>a,
+    .mobile-menu-services-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 16px 4px;
+      font-family: var(--display);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .mobile-caret {
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform .2s ease;
+      flex-shrink: 0;
+    }
+
+    .mobile-menu-services-toggle.open .mobile-caret {
+      transform: rotate(225deg);
+    }
+
+    /* Service categories on mobile: horizontal scrolling row of pills, not a vertical list */
+    .mobile-menu-pillrow {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 4px 14px;
+      margin: 0 -4px;
+      max-height: 0;
+      overflow-y: hidden;
+      transition: max-height .25s ease;
+    }
+
+    .mobile-menu-pillrow.open {
+      max-height: 70px;
+      overflow-y: visible;
+    }
+
+    .mobile-menu-pill {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 9px 16px;
+      text-decoration: none;
+      background: var(--paper-2);
+
+    }
+
+    .mobile-menu-pill:active {
+      border-color: var(--accent-2);
+      color: var(--accent-2);
+    }
+
+    .mobile-menu-cta {
+      display: block;
+      text-align: center;
+      margin-top: 26px;
+    }
+
+    /* STAT HIGHLIGHT CARD ("By the numbers") */
+    .stat-highlight {
+      position: relative;
+      border: 1px solid #CDE8DF;
+      border-left: 4px solid var(--accent-2);
+      background: linear-gradient(180deg, #EEF8F5 0%, var(--paper-2) 55%);
+      padding: 26px 26px 24px;
+      border-radius: 6px;
+      box-shadow: 0 4px 14px -8px rgba(31, 138, 112, 0.25);
+    }
+
+    .stat-highlight-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .stat-highlight-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .stat-highlight-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+    }
+
+    .stat-highlight-text {
+      margin: 0;
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    /* CONTACT FORM (site-native styling, not dependent on admin.css) */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 540px;
+    }
+
+    .contact-form .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width:560px) {
+      .contact-form .field-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-form .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .contact-form label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .contact-form label .optional {
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--muted);
+      font-family: var(--body);
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      font-family: var(--body);
+      font-size: 14.5px;
+      color: var(--ink);
+      background: var(--paper-2);
+      transition: border-color .15s ease, box-shadow .15s ease;
+      width: 100%;
+    }
+
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(31, 138, 112, 0.12);
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 130px;
+      font-family: var(--body);
+    }
+
+    .contact-form select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%235B5F6B'><path d='M5.5 7.5l4.5 4.5 4.5-4.5' stroke='%235B5F6B' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+    }
+
+    .contact-form button {
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    .form-error-box {
+      background: #FBEAEA;
+      border: 1px solid #F0C4C4;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+
+    .form-error-box p {
+      margin: 0;
+      font-size: 13.5px;
+      color: #9B2C2C;
+    }
+
+    .form-success-box {
+      border: 1px solid var(--accent-2);
+      border-left: 4px solid var(--accent-2);
+      background: linear-gradient(180deg, #EEF8F5 0%, var(--paper-2) 55%);
+      border-radius: 6px;
+      padding: 22px 24px;
+      max-width: 520px;
+    }
+
+    .form-success-box .lbl {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-2);
+      margin-bottom: 8px;
+    }
+
+    .form-success-box p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* PROSE — consistent styling for raw admin-entered content (blog posts, job descriptions) */
+    .prose {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--ink);
+    }
+
+    .prose>*:first-child {
+      margin-top: 0;
+    }
+
+    .prose>*:last-child {
+      margin-bottom: 0;
+    }
+
+    .prose p {
+      margin: 0 0 18px;
+    }
+
+    .prose h1,
+    .prose h2,
+    .prose h3,
+    .prose h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--ink);
+      margin: 32px 0 14px;
+      line-height: 1.25;
+    }
+
+    .prose h2 {
+      font-size: 24px;
+    }
+
+    .prose h3 {
+      font-size: 19px;
+    }
+
+    .prose h4 {
+      font-size: 16px;
+    }
+
+    .prose ul,
+    .prose ol {
+      margin: 0 0 18px;
+      padding-left: 22px;
+    }
+
+    .prose li {
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    .prose li::marker {
+      color: var(--accent-2);
+    }
+
+    .prose a {
+      color: var(--accent-2);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .prose a:hover {
+      color: var(--ink);
+    }
+
+    .prose strong {
+      font-weight: 700;
+    }
+
+    .prose blockquote {
+      margin: 20px 0;
+      padding: 4px 20px;
+      border-left: 3px solid var(--accent-2);
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .prose code {
+      font-family: var(--mono);
+      font-size: 0.88em;
+      background: var(--paper);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .prose pre {
+      background: var(--ink);
+      color: #C7CCD6;
+      padding: 16px 18px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 0 0 18px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .prose pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    .prose img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin: 8px 0 18px;
+      display: block;
+    }
+
+    .prose hr {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 32px 0;
+    }
+
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 18px;
+      font-size: 14px;
+    }
+
+    .prose th,
+    .prose td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .prose th {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site">
+    <nav>
+      <a class="logo" href="index.html" style="text-decoration:none;"><span class="dot"></span>BYTES ENCRYPT</a>
+      <ul class="navlinks">
+        <li class="has-mega">
+          <a href="index.html" onclick="return false;">Services <span class="caret"></span></a>
+          <div class="nav-mega">
+            <div class="mega-grid">
+              <div class="mega-col">
+                <a class="mega-cat-head" href="services/offensive-security.html">
+                  <span class="mega-icon">01</span>
+                  <span>Offensive Security</span>
+                </a>
+                <ul class="mega-list">
+                  <li>
+                    <a href="services/penetration-testing/index.html">
+                      <span class="mega-item-title">Penetration Testing</span>
+                      <span class="mega-item-blurb">Find the vulnerabilities scanners miss.</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="services/red-teaming/index.html">
+                      <span class="mega-item-title">Red Teaming</span>
+                      <span class="mega-item-blurb">Realistic attack scenarios for your defenses.</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="services/vulnerability-scanning/index.html">
+                      <span class="mega-item-title">Vulnerability Scanning</span>
+                      <span class="mega-item-blurb">Regular automated vulnerability scanning.</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="services/ai-penetration-testing/index.html">
+                      <span class="mega-item-title">AI Penetration Testing</span>
+                      <span class="mega-item-blurb">Secure LLMs, RAG systems, and AI agents.</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="services/secure-code-review/index.html">
+                      <span class="mega-item-title">Secure Code Review</span>
+                      <span class="mega-item-blurb">Find vulnerabilities before the code ships.</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <a class="mega-cat-head" href="services/cloud-security.html">
+                  <span class="mega-icon">02</span>
+                  <span>Cloud Security</span>
+                </a>
+                <ul class="mega-list">
+                  <li>
+                    <a href="services/cloud-configuration-review/index.html">
+                      <span class="mega-item-title">Cloud Security</span>
+                      <span class="mega-item-blurb">Misconfigurations are the new perimeter.</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <a class="mega-cat-head" href="services/security-consulting.html">
+                  <span class="mega-icon">03</span>
+                  <span>Security Consulting</span>
+                </a>
+                <ul class="mega-list">
+                  <li>
+                    <a href="services/isms-iso27001/index.html">
+                      <span class="mega-item-title">ISMS / ISO 27001</span>
+                      <span class="mega-item-blurb">Build and certify your management system.</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="services/virtual-ciso/index.html">
+                      <span class="mega-item-title">Virtual CISO</span>
+                      <span class="mega-item-blurb">Information security without a dedicated role.</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <a class="mega-cat-head" href="services/security-awareness.html">
+                  <span class="mega-icon">04</span>
+                  <span>Security Awareness</span>
+                </a>
+                <ul class="mega-list">
+                  <li>
+                    <a href="services/live-attack-demo/index.html">
+                      <span class="mega-item-title">Live Attack Demonstration</span>
+                      <span class="mega-item-blurb">Experience real attacks live.</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="services/phishing-simulation/index.html">
+                      <span class="mega-item-title">Phishing Simulation</span>
+                      <span class="mega-item-blurb">Prepare employees for targeted attacks.</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="services/interactive-awareness-training/index.html">
+                      <span class="mega-item-title">Interactive Awareness Training</span>
+                      <span class="mega-item-blurb">Gamified training at the workplace.</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="training.html">Training</a></li>
+        <li><a href="blog.php">Blog</a></li>
+        <li><a href="careers.php">Careers</a></li>
+        <li><a href="contact.php">Contact</a></li>
+      </ul>
+      <a class="navcta" href="contact.php">Book a consultation →</a>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+  <div class="mobile-menu-panel" id="mobileMenuPanel">
+    <ul class="mobile-menu-list">
+      <li class="mobile-menu-services-item">
+        <button class="mobile-menu-services-toggle" id="mobileServicesToggle" type="button">
+          Services <span class="mobile-caret"></span>
+        </button>
+        <div class="mobile-menu-pillrow" id="mobileServicesSublist">
+          <a class="mobile-menu-pill" href="services/offensive-security.html">Offensive Security</a><a
+            class="mobile-menu-pill" href="services/cloud-security.html">Cloud Security</a><a class="mobile-menu-pill"
+            href="services/security-consulting.html">Security Consulting</a><a class="mobile-menu-pill"
+            href="services/security-awareness.html">Security Awareness</a>
+        </div>
+      </li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="training.html">Training</a></li>
+      <li><a href="blog.php">Blog</a></li>
+      <li><a href="careers.php">Careers</a></li>
+      <li><a href="contact.php">Contact</a></li>
+    </ul>
+    <a class="navcta mobile-menu-cta" href="contact.php">Book a consultation →</a>
+  </div>
+  <script>
+    (function () {
+      var toggle = document.getElementById('mobileMenuToggle');
+      var panel = document.getElementById('mobileMenuPanel');
+      if (toggle && panel) {
+        toggle.addEventListener('click', function () {
+          var isOpen = panel.classList.toggle('open');
+          toggle.classList.toggle('open', isOpen);
+          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        panel.querySelectorAll('.mobile-menu-list > li > a, .mobile-menu-pillrow a, .mobile-menu-cta').forEach(function (link) {
+          link.addEventListener('click', function () {
+            panel.classList.remove('open');
+            toggle.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+      var svcToggle = document.getElementById('mobileServicesToggle');
+      var svcList = document.getElementById('mobileServicesSublist');
+      if (svcToggle && svcList) {
+        svcToggle.addEventListener('click', function () {
+          svcList.classList.toggle('open');
+          svcToggle.classList.toggle('open');
+        });
+      }
+    })();
+  </script>
+
+  <section class="hero">
+    <div class="hero-ascii-wrap" aria-hidden="true">
+      <div id="gradientAsciiHero" class="gradient-ascii-container"
+        style="width: 100%; height: 100%; position: relative;">
+        <canvas class="gradient-ascii-canvas" aria-hidden="true"></canvas>
+      </div>
+      <div class="hero-video-overlay"></div>
+    </div>
+    <div class="hero-grid"></div>
+    <div class="wrap hero-inner">
+      <h1 class="cipher">
+        Your systems will be tested.<br>
+        <span class="scramble" id="scrambleText">
+          <span id="heroGradientText" class="gradient-text">
+            <span class="gradient-text__inner">
+              <span class="gradient-text__content">Better it's us first.</span>
+              <span class="gradient-text__glow" aria-hidden="true">Better it's us first.</span>
+            </span>
+          </span>
+        </span>
+      </h1>
+      <p class="lede">Bytes Encrypt runs penetration tests, audits, and security awareness programs for growing
+        companies — clear scope, fixed pricing, and reports your board will actually read.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="contact.php">Get a fixed-price quote →</a>
+        <a class="btn-secondary" href="#services">See our services</a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <div class="trust">
+    <div class="trust-marquee-wrapper">
+      <div class="trust-track">
+        <div class="trust-group">
+          <span class="trust-item">Finance<span class="trust-dot"></span></span>
+          <span class="trust-item">Healthcare<span class="trust-dot"></span></span>
+          <span class="trust-item">SaaS<span class="trust-dot"></span></span>
+          <span class="trust-item">Manufacturing<span class="trust-dot"></span></span>
+          <span class="trust-item">Public sector<span class="trust-dot"></span></span>
+          <span class="trust-item">Logistics<span class="trust-dot"></span></span>
+          <span class="trust-item">E-Commerce<span class="trust-dot"></span></span>
+          <span class="trust-item">FinTech<span class="trust-dot"></span></span>
+        </div>
+        <div class="trust-group" aria-hidden="true">
+          <span class="trust-item">Finance<span class="trust-dot"></span></span>
+          <span class="trust-item">Healthcare<span class="trust-dot"></span></span>
+          <span class="trust-item">SaaS<span class="trust-dot"></span></span>
+          <span class="trust-item">Manufacturing<span class="trust-dot"></span></span>
+          <span class="trust-item">Public sector<span class="trust-dot"></span></span>
+          <span class="trust-item">Logistics<span class="trust-dot"></span></span>
+          <span class="trust-item">E-Commerce<span class="trust-dot"></span></span>
+          <span class="trust-item">FinTech<span class="trust-dot"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- WHO WE ARE / DEFENSE SOLUTIONS SECTION (INTEGRATED FROM REFERENCE) -->
+  <section id="about" class="who-we-are-section">
+    <div class="who-we-are-bg-grid" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="who-we-are-grid">
+        
+        <!-- Left Column: Isometric Visual Showcase -->
+        <div class="who-we-are-visual">
+          <div class="who-we-are-glow" aria-hidden="true"></div>
+          <div class="who-we-are-img-wrap">
+            <img src="images/cyber-shield-isometric.png" alt="Bytes Encrypt Multi-layered Cybersecurity Architecture" class="who-we-are-img" loading="lazy" width="540" height="420">
+          </div>
+        </div>
+
+        <!-- Right Column: Value Narrative & Feature List -->
+        <div class="who-we-are-content">
+          <div class="who-we-are-eyebrow">WHO WE ARE</div>
+          <h2 class="who-we-are-title">We provide expert cyber security solutions for your business.</h2>
+          <p class="who-we-are-desc">Bytes Encrypt delivers rigorous penetration testing, cloud security reviews, and strategic defense engineering — tailored specifically to safeguard your critical infrastructure and sensitive data assets against modern cyber adversaries.</p>
+          
+          <h3 class="who-we-are-subtitle">Here's Why You Should Choose Our Cyber Security Services:</h3>
+          
+          <ul class="who-we-are-list">
+            <li class="who-we-are-item">
+              <span class="who-we-are-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span>Expertise in Cyber Threat Mitigation</span>
+            </li>
+            <li class="who-we-are-item">
+              <span class="who-we-are-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span>Tailored Solutions for Your Unique Needs</span>
+            </li>
+            <li class="who-we-are-item">
+              <span class="who-we-are-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span>Proactive Approach to Security</span>
+            </li>
+            <li class="who-we-are-item">
+              <span class="who-we-are-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span>Dedicated Support and Rapid Response</span>
+            </li>
+          </ul>
+
+          <a href="about.html" class="who-we-are-cta">
+            <span>Discover More</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- WEB SECURITY PROTOCOLS SECTION (INTEGRATED BELOW WHO WE ARE) -->
+  <section id="protocols" class="protocols-section">
+    <div class="protocols-bg-glow" aria-hidden="true"></div>
+    <div class="wrap">
+      
+      <!-- Section Header -->
+      <div class="protocols-header">
+        <h2 class="protocols-title">
+          The web security protocols in
+          <span class="brand-accent">Bytes Encrypt</span>
+        </h2>
+      </div>
+
+      <!-- 3-Column Protocol Cards Grid -->
+      <div class="protocols-grid">
+        
+        <!-- Card 01: HTTPS -->
+        <div class="protocol-card">
+          <div class="protocol-watermark" aria-hidden="true">01</div>
+          <div class="protocol-icon-wrap" aria-hidden="true">
+            <!-- Shield Lock Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <rect x="9" y="11" width="6" height="5" rx="1"></rect>
+              <path d="M10 11V9a2 2 0 1 1 4 0v2"></path>
+            </svg>
+          </div>
+          <h3 class="protocol-name">Hypertext Transfer Protocol Secure</h3>
+          <p class="protocol-desc">Enforced end-to-end encryption across all ingress paths, mitigating adversary eavesdropping, session interception, and man-in-the-middle tampering.</p>
+        </div>
+
+        <!-- Card 02: TLS -->
+        <div class="protocol-card featured">
+          <div class="protocol-watermark" aria-hidden="true">02</div>
+          <div class="protocol-icon-wrap" aria-hidden="true">
+            <!-- Certificate / Document Lock Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <rect x="9" y="13" width="6" height="5" rx="1"></rect>
+              <path d="M10 13v-1.5a2 2 0 1 1 4 0v1.5"></path>
+            </svg>
+          </div>
+          <h3 class="protocol-name">TLS (Transport Layer Security)</h3>
+          <p class="protocol-desc">Modern cryptographic handshakes and high-cipher suites ensuring data integrity, strict forward secrecy, and authenticated peer handshakes.</p>
+        </div>
+
+        <!-- Card 03: DNSSEC -->
+        <div class="protocol-card">
+          <div class="protocol-watermark" aria-hidden="true">03</div>
+          <div class="protocol-icon-wrap" aria-hidden="true">
+            <!-- Globe / Network Security Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+          </div>
+          <h3 class="protocol-name">Domain Name System Security Extensions</h3>
+          <p class="protocol-desc">Cryptographically signed DNS records protecting your clients from cache poisoning, forged redirection attacks, and spoofed naming infrastructure.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section id="process" class="process">
+    <div class="wrap">
+      <!-- TWO-COLUMN WORKFLOW HEADER & CURVED TIMELINE -->
+      <div class="workflow-hero-grid">
+        <!-- Left Column: Section Introduction & 3D Stage Visual Showcase -->
+        <div class="workflow-intro">
+          <div class="eyebrow"><span class="dot" style="background:#D4FF24;"></span>INTERACTIVE WORKFLOW</div>
+          <h2 class="section-title">From First Call to Verified Fix</h2>
+          <p class="section-sub">A deterministic, transparent security engagement pipeline — watch what happens at every stage.</p>
+
+          <!-- 3D Stage Visual Illustration Container -->
+          <div class="workflow-visual-stage" aria-label="3D Workflow Stage Illustration">
+            <div class="workflow-visual-slider" id="workflowVisualSlider">
+              <img src="images/workflow/stage-01-inquiry.png" alt="Inquiry - Scope & Brief: 3D Minimalist Magnifying Glass" class="workflow-3d-img active" data-img-step="0" loading="eager">
+              <img src="images/workflow/stage-02-fixed-quote.png" alt="Proposal - Fixed Quote: 3D Minimalist Calculator" class="workflow-3d-img" data-img-step="1" loading="eager">
+              <img src="images/workflow/stage-03-kickoff.png" alt="Setup - Safe Kickoff: 3D Minimalist Server Rack" class="workflow-3d-img" data-img-step="2" loading="eager">
+              <img src="images/workflow/stage-04-testing.png" alt="Execution - Live Testing: 3D Minimalist Cyber Monitor" class="workflow-3d-img" data-img-step="3" loading="eager">
+              <img src="images/workflow/stage-05-report-retest.png" alt="Resolution - Report & Retest: 3D Minimalist Verified Shield" class="workflow-3d-img" data-img-step="4" loading="eager">
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Five-Stage Curved Timeline -->
+        <div class="curved-timeline-wrap">
+          <svg class="curved-timeline-svg" viewBox="0 0 40 400" preserveAspectRatio="none" aria-hidden="true">
+            <path class="timeline-path-bg" d="M 20,10 Q 5,100 20,200 T 20,390" />
+            <path class="timeline-path-active" id="timelinePathActive" d="M 20,10 Q 5,100 20,200 T 20,390" stroke-dasharray="450" stroke-dashoffset="360" />
+          </svg>
+
+          <div class="curved-timeline-stages" role="tablist" aria-label="Interactive Workflow Stages">
+            <!-- Stage 01 -->
+            <button class="curved-stage-item active flow-tab-btn" data-step="0" role="tab" aria-selected="true">
+              <div class="stage-indicator">
+                <svg class="indicator-progress-ring" viewBox="0 0 48 48">
+                  <circle class="progress-ring-bg" cx="24" cy="24" r="22"></circle>
+                  <circle class="progress-ring-bar" cx="24" cy="24" r="22"></circle>
+                </svg>
+                <span class="stage-number">01</span>
+              </div>
+              <div class="stage-content">
+                <div class="stage-meta">
+                  <span class="stage-cat">INQUIRY</span>
+                </div>
+                <h4 class="stage-heading">Scope & Brief</h4>
+                <p class="stage-short-desc">Defined perimeters, mutual NDA, and production-safe rules of engagement.</p>
+              </div>
+            </button>
+
+            <!-- Stage 02 -->
+            <button class="curved-stage-item flow-tab-btn" data-step="1" role="tab" aria-selected="false">
+              <div class="stage-indicator">
+                <svg class="indicator-progress-ring" viewBox="0 0 48 48">
+                  <circle class="progress-ring-bg" cx="24" cy="24" r="22"></circle>
+                  <circle class="progress-ring-bar" cx="24" cy="24" r="22"></circle>
+                </svg>
+                <span class="stage-number">02</span>
+              </div>
+              <div class="stage-content">
+                <div class="stage-meta">
+                  <span class="stage-cat">PROPOSAL</span>
+                </div>
+                <h4 class="stage-heading">Fixed Quote</h4>
+                <p class="stage-short-desc">100% price certainty, certified lead profile, and free 30-day retest included.</p>
+              </div>
+            </button>
+
+            <!-- Stage 03 -->
+            <button class="curved-stage-item flow-tab-btn" data-step="2" role="tab" aria-selected="false">
+              <div class="stage-indicator">
+                <svg class="indicator-progress-ring" viewBox="0 0 48 48">
+                  <circle class="progress-ring-bg" cx="24" cy="24" r="22"></circle>
+                  <circle class="progress-ring-bar" cx="24" cy="24" r="22"></circle>
+                </svg>
+                <span class="stage-number">03</span>
+              </div>
+              <div class="stage-content">
+                <div class="stage-meta">
+                  <span class="stage-cat">SETUP</span>
+                </div>
+                <h4 class="stage-heading">Safe Kickoff</h4>
+                <p class="stage-short-desc">Static egress tester IPs allowlisted, encrypted Slack bridge, and pre-flight health checks.</p>
+              </div>
+            </button>
+
+            <!-- Stage 04 -->
+            <button class="curved-stage-item flow-tab-btn" data-step="3" role="tab" aria-selected="false">
+              <div class="stage-indicator">
+                <svg class="indicator-progress-ring" viewBox="0 0 48 48">
+                  <circle class="progress-ring-bg" cx="24" cy="24" r="22"></circle>
+                  <circle class="progress-ring-bar" cx="24" cy="24" r="22"></circle>
+                </svg>
+                <span class="stage-number">04</span>
+              </div>
+              <div class="stage-content">
+                <div class="stage-meta">
+                  <span class="stage-cat">EXECUTION</span>
+                </div>
+                <h4 class="stage-heading">Live Testing</h4>
+                <p class="stage-short-desc">Human offensive researchers hunt for auth bypasses, chained IDORs, and RCEs.</p>
+              </div>
+            </button>
+
+            <!-- Stage 05 -->
+            <button class="curved-stage-item flow-tab-btn" data-step="4" role="tab" aria-selected="false">
+              <div class="stage-indicator">
+                <svg class="indicator-progress-ring" viewBox="0 0 48 48">
+                  <circle class="progress-ring-bg" cx="24" cy="24" r="22"></circle>
+                  <circle class="progress-ring-bar" cx="24" cy="24" r="22"></circle>
+                </svg>
+                <span class="stage-number">05</span>
+              </div>
+              <div class="stage-content">
+                <div class="stage-meta">
+                  <span class="stage-cat">RESOLUTION</span>
+                </div>
+                <h4 class="stage-heading">Report & Retest</h4>
+                <p class="stage-short-desc">Board summary, developer code patches, free retest verification, and compliance attestation.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Curved Timeline Stages -->
+    </div>
+  </section>
+
+  <!-- DEFENSE BANNER SECTION (INTEGRATED BELOW INTERACTIVE WORKFLOW) -->
+  <section class="defense-banner-section">
+    <div class="defense-banner-bg" aria-hidden="true">
+      <img src="images/cyber-analyst-defense.jpg" alt="Bytes Encrypt Cybersecurity Operations & Infrastructure Defense" class="defense-banner-img" loading="lazy">
+    </div>
+    <div class="defense-banner-overlay" aria-hidden="true"></div>
+    <div class="defense-banner-grid-lines" aria-hidden="true"></div>
+    <div class="wrap" style="position: relative; width: 100%;">
+      <div class="defense-banner-content">
+        <div class="defense-banner-eyebrow">CONTINUOUS DEFENSE</div>
+        <h2 class="defense-banner-title">Protecting your technology, your identity, and everything in between.</h2>
+        <p class="defense-banner-desc">From complex cloud perimeters to identity providers and internal codebases, Bytes Encrypt delivers high-impact penetration testing and active vulnerability reduction — ensuring your systems remain resilient against persistent threats.</p>
+        <a href="contact.php" class="defense-banner-cta">
+          <span>Learn More</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="wrap">
+      <div class="stats-counter-row">
+        <div class="stat-item">
+          <div class="stat-num-wrap">
+            <span class="count-up" data-target="48">0</span><span class="stat-unit">h</span>
+          </div>
+          <div class="stat-desc">Scoped quote turnaround</div>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <div class="stat-num-wrap">
+            <span class="count-up" data-target="100">0</span><span class="stat-unit">%</span>
+          </div>
+          <div class="stat-desc">In-house security consultants</div>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <div class="stat-num-wrap">
+            <span class="count-up" data-target="1">0</span>
+          </div>
+          <div class="stat-desc">Dedicated senior project lead</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUR SERVICES 3-COLUMN SECTION (INTEGRATED BELOW STATS COUNTER STRIP) -->
+  <section id="services" class="services-overview-section">
+    <div class="services-overview-bg-mesh" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="services-overview-grid">
+        
+        <!-- Left Column: Headline, Narrative & Support Contact -->
+        <div class="services-overview-left">
+          <div class="services-overview-eyebrow">OUR SERVICES</div>
+          <h2 class="services-overview-title">Allow us to handle the security, while you concentrate on your priorities.</h2>
+          <p class="services-overview-desc">From proactive intrusion detection to automated cloud compliance and rapid incident handling, Bytes Encrypt ensures continuous operational integrity so your development and product teams can build fearlessly.</p>
+          
+          <div class="services-support-callout">
+            <div class="services-support-icon" aria-hidden="true">
+              <!-- Phone / Support SVG Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <div class="services-support-meta">
+              <span class="services-support-lbl">Client Support</span>
+              <a href="tel:88840002323" class="services-support-phone">(888) 4000-2323</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Column: Cyber Testing Frame Visual -->
+        <div class="services-overview-center">
+          <div class="services-center-frame">
+            <img src="images/soc-collaboration-testing.jpg" alt="Bytes Encrypt Hands-on Threat Hunting & Code Analysis" class="services-center-img" loading="lazy">
+            <div class="services-center-gradient" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <!-- Right Column: 3 Core Service Feature Cards -->
+        <div class="services-overview-right">
+          
+          <!-- Card 1: Privacy Protection -->
+          <div class="service-feature-card">
+            <div class="service-feature-icon" aria-hidden="true">
+              <!-- Shield User/Privacy Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+                <path d="M7 18a5 5 0 0 1 10 0"></path>
+              </svg>
+            </div>
+            <div class="service-feature-body">
+              <h3 class="service-feature-title">Privacy Protection</h3>
+              <p class="service-feature-desc">Rigorous data residency audits, customer PII encryption protocols, and zero-trust privacy boundaries tailored to stringent regulatory baselines.</p>
+            </div>
+          </div>
+
+          <!-- Card 2: Secure Network -->
+          <div class="service-feature-card">
+            <div class="service-feature-icon" aria-hidden="true">
+              <!-- Server / Network Stack Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <div class="service-feature-body">
+              <h3 class="service-feature-title">Secure Network</h3>
+              <p class="service-feature-desc">Perimeter hardening, cloud VPC architecture reviews, and ingress/egress filtering designed to eliminate lateral movement pathways.</p>
+            </div>
+          </div>
+
+          <!-- Card 3: Malware & Virus Protection -->
+          <div class="service-feature-card">
+            <div class="service-feature-icon" aria-hidden="true">
+              <!-- Bug / Shield Malware Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div class="service-feature-body">
+              <h3 class="service-feature-title">Malware & Virus Protection</h3>
+              <p class="service-feature-desc">Endpoint runtime protection, continuous payload detonation testing, and automated behavioral telemetry to stop evasive malware.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE OFFER 6-CARD GRID SECTION -->
+  <section id="offerings" class="what-we-offer-section">
+    <div class="what-we-offer-bg-fx" aria-hidden="true"></div>
+    <div class="wrap">
+      
+      <!-- Section Header -->
+      <div class="what-we-offer-header">
+        <div class="what-we-offer-eyebrow">WHAT WE OFFER</div>
+        <h2 class="what-we-offer-title">We offer innovative cyber security solutions.</h2>
+      </div>
+
+      <!-- 6-Card Offerings Grid -->
+      <div class="what-we-offer-grid">
+        
+        <!-- Card 1: Network Security -->
+        <div class="offer-card">
+          <div class="offer-card-top">
+            <div class="offer-icon-box" aria-hidden="true">
+              <!-- Network/Globe Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <div class="offer-meta">
+              <h3 class="offer-title">Network Security</h3>
+              <span class="offer-tagline">Infrastructure Hardening</span>
+            </div>
+          </div>
+          <p class="offer-desc">Comprehensive vulnerability assessments, zero-trust network segmentation, and real-time egress monitoring to eliminate unauthorized lateral access.</p>
+          <a href="services/offensive-security.html" class="offer-learn-more">
+            <span>Learn More</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Card 2: Endpoint Security -->
+        <div class="offer-card">
+          <div class="offer-card-top">
+            <div class="offer-icon-box" aria-hidden="true">
+              <!-- Monitor/Device Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+                <path d="m9 10 2 2 4-4"></path>
+              </svg>
+            </div>
+            <div class="offer-meta">
+              <h3 class="offer-title">Endpoint Security</h3>
+              <span class="offer-tagline">Fleet Defense & EDR</span>
+            </div>
+          </div>
+          <p class="offer-desc">Behavioral process telemetry, automated threat quarantine, and host baseline auditing ensuring every workstation and mobile asset is locked down.</p>
+          <a href="services/offensive-security.html" class="offer-learn-more">
+            <span>Learn More</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Card 3: Server Protections -->
+        <div class="offer-card">
+          <div class="offer-card-top">
+            <div class="offer-icon-box" aria-hidden="true">
+              <!-- Server Stack & Shield Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <div class="offer-meta">
+              <h3 class="offer-title">Server Protections</h3>
+              <span class="offer-tagline">Kernel & Cloud Host Defense</span>
+            </div>
+          </div>
+          <p class="offer-desc">Automated kernel live-patching, CIS configuration benchmarks, and immutable container host environments protecting mission-critical workloads.</p>
+          <a href="services/cloud-security.html" class="offer-learn-more">
+            <span>Learn More</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Card 4: Data Encryption -->
+        <div class="offer-card">
+          <div class="offer-card-top">
+            <div class="offer-icon-box" aria-hidden="true">
+              <!-- Shield Lock Encryption Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <rect x="9" y="11" width="6" height="5" rx="1"></rect>
+                <path d="M10 11V9a2 2 0 1 1 4 0v2"></path>
+              </svg>
+            </div>
+            <div class="offer-meta">
+              <h3 class="offer-title">Data Encryption</h3>
+              <span class="offer-tagline">At-Rest & In-Transit</span>
+            </div>
+          </div>
+          <p class="offer-desc">Military-grade AES-256 and post-quantum cryptographic standards protecting sensitive customer databases, trade secrets, and API payloads.</p>
+          <a href="services/security-consulting.html" class="offer-learn-more">
+            <span>Learn More</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Card 5: Security Consulting -->
+        <div class="offer-card">
+          <div class="offer-card-top">
+            <div class="offer-icon-box" aria-hidden="true">
+              <!-- Chat / Advisory Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <line x1="9" y1="9" x2="15" y2="9"></line>
+                <line x1="9" y1="13" x2="13" y2="13"></line>
+              </svg>
+            </div>
+            <div class="offer-meta">
+              <h3 class="offer-title">Security Consulting</h3>
+              <span class="offer-tagline">vCISO & Compliance</span>
+            </div>
+          </div>
+          <p class="offer-desc">Strategic ISO 27001, SOC 2, and regulatory roadmap guidance from experienced practitioners who know how to pass enterprise security audits.</p>
+          <a href="services/security-consulting.html" class="offer-learn-more">
+            <span>Learn More</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Card 6: Monitoring and Support -->
+        <div class="offer-card">
+          <div class="offer-card-top">
+            <div class="offer-icon-box" aria-hidden="true">
+              <!-- Headset / Monitoring Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+              </svg>
+            </div>
+            <div class="offer-meta">
+              <h3 class="offer-title">Monitoring and Support</h3>
+              <span class="offer-tagline">24/7 Threat Hunting</span>
+            </div>
+          </div>
+          <p class="offer-desc">Continuous telemetry monitoring, active siren alerts, and a dedicated rapid response incident team standing by 24/7/365.</p>
+          <a href="contact.php" class="offer-learn-more">
+            <span>Learn More</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECURING YOUR ONLINE PRESENCE (HERO BANNER WITH PROGRESS METRICS) -->
+  <section class="securing-presence-section">
+    <div class="securing-presence-bg" aria-hidden="true">
+      <img src="images/laptop-code-securing.jpg" alt="Bytes Encrypt Hands-on Code Security & Multi-vector Defense" class="securing-presence-img" loading="lazy">
+    </div>
+    <div class="securing-presence-overlay" aria-hidden="true"></div>
+    <div class="securing-presence-grid-fx" aria-hidden="true"></div>
+    <div class="wrap" style="position: relative; width: 100%;">
+      <div class="securing-presence-content">
+        <div class="securing-presence-eyebrow">MEASURED DEFENSE</div>
+        <h2 class="securing-presence-title">Securing Your Online Presence, Every Step Of The Way.</h2>
+        <p class="securing-presence-desc">Continuous threat modeling, automated attack surface mapping, and rigorous adversary emulation ensuring your security posture adapts faster than emerging exploits.</p>
+        
+        <!-- Progress Metric Bars Stack -->
+        <div class="securing-progress-stack">
+          
+          <!-- Metric 1: Information Security (87%) -->
+          <div class="securing-progress-item">
+            <div class="securing-progress-header">
+              <span>Information Security</span>
+              <span class="securing-progress-pct">87%</span>
+            </div>
+            <div class="securing-progress-track" aria-hidden="true">
+              <div class="securing-progress-fill" style="width: 87%;"></div>
+            </div>
+          </div>
+
+          <!-- Metric 2: Network Security (74%) -->
+          <div class="securing-progress-item">
+            <div class="securing-progress-header">
+              <span>Network Security</span>
+              <span class="securing-progress-pct">74%</span>
+            </div>
+            <div class="securing-progress-track" aria-hidden="true">
+              <div class="securing-progress-fill" style="width: 74%;"></div>
+            </div>
+          </div>
+
+          <!-- Metric 3: Cloud Security (64%) -->
+          <div class="securing-progress-item">
+            <div class="securing-progress-header">
+              <span>Cloud Security</span>
+              <span class="securing-progress-pct">64%</span>
+            </div>
+            <div class="securing-progress-track" aria-hidden="true">
+              <div class="securing-progress-fill" style="width: 64%;"></div>
+            </div>
+          </div>
+
+          <!-- Metric 4: End-User Education (81%) -->
+          <div class="securing-progress-item">
+            <div class="securing-progress-header">
+              <span>End-User Education</span>
+              <span class="securing-progress-pct">81%</span>
+            </div>
+            <div class="securing-progress-track" aria-hidden="true">
+              <div class="securing-progress-fill" style="width: 81%;"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS 6-CARD GRID SECTION -->
+  <section id="projects" class="featured-projects-section">
+    <div class="featured-projects-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      
+      <!-- Section Header -->
+      <div class="featured-projects-header">
+        <div class="featured-projects-eyebrow">FEATURED PROJECTS</div>
+        <h2 class="featured-projects-title">Safeguarding you against cyber threats.</h2>
+      </div>
+
+      <!-- 6-Card Featured Projects Grid -->
+      <div class="featured-projects-grid">
+        
+        <!-- Project 1: Intrusion Detection Implementation -->
+        <div class="project-card">
+          <div class="project-img-placeholder">
+            <div class="project-floating-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <circle cx="12" cy="11" r="2"></circle>
+              </svg>
+            </div>
+            <span class="placeholder-badge">Project Image Space</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-card-title">Intrusion Detection Implementation</h3>
+            <p class="project-card-desc">Architecting automated IDS/IPS telemetry pipelines and deep packet signature inspection across multi-tier enterprise server clusters.</p>
+            <a href="services/penetration-testing/index.html" class="project-card-cta">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Project 2: Vulnerability Assessment for Banking -->
+        <div class="project-card">
+          <div class="project-img-placeholder">
+            <div class="project-floating-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <span class="placeholder-badge">Project Image Space</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-card-title">Vulnerability Assessment for Banking</h3>
+            <p class="project-card-desc">Thorough grey-box API audits and transaction logic stress tests identifying critical authentication bypasses in core financial routing systems.</p>
+            <a href="services/penetration-testing/index.html" class="project-card-cta">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Project 3: Cyber Training Program -->
+        <div class="project-card">
+          <div class="project-img-placeholder">
+            <div class="project-floating-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <span class="placeholder-badge">Project Image Space</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-card-title">Cyber Training Program</h3>
+            <p class="project-card-desc">Simulated social engineering, red-team spear-phishing campaigns, and executive threat response workshops across 2,500+ employees.</p>
+            <a href="services/security-awareness.html" class="project-card-cta">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Project 4: Custom Security Policies -->
+        <div class="project-card">
+          <div class="project-img-placeholder">
+            <div class="project-floating-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <path d="m9 15 2 2 4-4"></path>
+              </svg>
+            </div>
+            <span class="placeholder-badge">Project Image Space</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-card-title">Custom Security Policies</h3>
+            <p class="project-card-desc">Formalized ISO 27001 ISMS policies, incident escalation runbooks, and strict cryptographic access control frameworks.</p>
+            <a href="services/isms-iso27001/index.html" class="project-card-cta">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Project 5: Cloud Security Assessment -->
+        <div class="project-card">
+          <div class="project-img-placeholder">
+            <div class="project-floating-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+              </svg>
+            </div>
+            <span class="placeholder-badge">Project Image Space</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-card-title">Cloud Security Assessment</h3>
+            <p class="project-card-desc">Multi-account AWS & Azure posture audits, IAM privilege escalation remediation, and public S3 bucket surface lockdown.</p>
+            <a href="services/cloud-security.html" class="project-card-cta">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Project 6: Incident Response Plan -->
+        <div class="project-card">
+          <div class="project-img-placeholder">
+            <div class="project-floating-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <span class="placeholder-badge">Project Image Space</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-card-title">Incident Response Plan</h3>
+            <p class="project-card-desc">Tactical containment strategies, evidence chain-of-custody protocols, and automated forensic triage tools for zero-day intrusions.</p>
+            <a href="services/security-consulting.html" class="project-card-cta">Learn More</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="eyebrow">FAQ</div>
+      <h2 class="section-title">Common questions</h2>
+      <div id="faqList">
+        <div class="faq-item open">
+          <button class="faq-q">What's included in a fixed-price quote? <span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>Scope, testing days, report format, and one free retest — all confirmed before work starts, so there's no
+              hourly-rate risk.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How is this different from an automated scan? <span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>A scanner flags known signatures. Our consultants chain weaknesses together and test business logic a
+              scanner can't reason about.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Do you work with regulated industries? <span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>Yes — describe your specific sector experience and compliance frameworks here (NIS-2, DORA, HIPAA, etc.
+              as relevant).</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How fast can you start? <span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>State your real lead time here — this is a placeholder answer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="ctaband" data-interference-ribbons>
+      <div class="ctaband-content">
+        <h2>Get a scoped, fixed-price quote</h2>
+        <p>No obligation. 30-minute call. Answer within 48 hours.</p>
+        <a class="btn-primary" href="contact.php">Book a consultation →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURELAYER7 / ENTERPRISE CYBER FOOTER DESIGN -->
+  <footer class="enterprise-footer">
+    <div class="wrap">
+      
+      <!-- 4-Column Information Grid Matching Uploaded Design -->
+      <div class="footer-columns-grid">
+        
+        <!-- Column 1: Brand Logo, Tagline & Square Social Buttons -->
+        <div class="footer-brand-col">
+          <a href="index.html" class="footer-brand-logo">
+            <span class="brand-diamond"></span>BYTES ENCRYPT
+          </a>
+          <p class="footer-brand-desc">Offensive security and compliance for growing companies.</p>
+          <div class="footer-square-socials">
+            <a href="https://www.linkedin.com/company/bytesencrypt" aria-label="LinkedIn" target="_blank" rel="noopener" class="footer-square-btn" title="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61593238796805" aria-label="Facebook" target="_blank" rel="noopener" class="footer-square-btn" title="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path d="M13.5 21v-7.6h2.55l.38-2.96h-2.93V8.56c0-.86.24-1.44 1.47-1.44h1.57V4.47c-.27-.04-1.2-.12-2.28-.12-2.26 0-3.8 1.38-3.8 3.9v2.17H7.99v2.96h2.47V21h3.04z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/bytesencryptofficial" aria-label="Instagram" target="_blank" rel="noopener" class="footer-square-btn" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/>
+                <circle cx="12" cy="12" r="3.7"/>
+                <circle cx="17.15" cy="6.85" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="https://x.com/bytes_encrypt?s=11&t=QLeS0uj3LXy4TFrj0sRWrA" aria-label="Twitter / X" target="_blank" rel="noopener" class="footer-square-btn" title="Twitter / X">
+              <svg viewBox="0 0 24 24">
+                <path d="M18.9 3H21.6l-5.85 6.68L22.7 21h-5.24l-4.1-5.36L8.66 21H5.96l6.26-7.15L4.3 3h5.37l3.7 4.9L18.9 3zm-.92 16.3h1.45L8.08 4.6H6.53L17.98 19.3z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2: SERVICES -->
+        <div>
+          <h5 class="footer-col-header">SERVICES</h5>
+          <ul class="footer-col-list">
+            <li><a href="#services">Penetration Testing</a></li>
+            <li><a href="#services">Compliance & Audits</a></li>
+            <li><a href="#services">Security Awareness</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: COMPANY -->
+        <div>
+          <h5 class="footer-col-header">COMPANY</h5>
+          <ul class="footer-col-list">
+            <li><a href="about.html">About</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: CONTACT -->
+        <div>
+          <h5 class="footer-col-header">CONTACT</h5>
+          <ul class="footer-col-list">
+            <li><a href="contact.php">Contact us</a></li>
+            <li class="footer-contact-item"><a href="mailto:contact@bytesencrypt.com">contact@bytesencrypt.com</a></li>
+            <li class="footer-contact-item"><a href="tel:+919113962011">+91 9113962011</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Giant Watermark Typography -->
+      <div class="footer-giant-watermark-wrap">
+        <div class="footer-giant-watermark">BytesEncrypt</div>
+      </div>
+
+      <!-- Final Centered Copyright Line -->
+      <div class="footer-final-copyright-bar">
+        <p class="footer-final-copyright">© 2026 Bytes Encrypt. All rights reserved.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      if (item.classList.contains('open')) { a.style.maxHeight = a.scrollHeight + 'px'; }
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-a').style.maxHeight = 0;
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Hero cipher scramble effect
+    const target = "Better it's us first.";
+    const chars = "01ABCDEF#$%&";
+    const el = document.getElementById('scrambleTxt');
+    if (el && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let frame = 0;
+      const totalFrames = 24;
+      function tick() {
+        let out = "";
+        for (let i = 0; i < target.length; i++) {
+          if (target[i] === " ") { out += " "; continue; }
+          const revealAt = (i / target.length) * totalFrames;
+          if (frame >= revealAt + 6) { out += target[i]; }
+          else { out += chars[Math.floor(Math.random() * chars.length)]; }
+        }
+        el.textContent = out;
+        frame++;
+        if (frame < totalFrames + 8) { requestAnimationFrame(() => setTimeout(tick, 35)); }
+        else { el.textContent = target; }
+      }
+      tick();
+    }
+
+    // Hero background video HLS stream initialization
+    (function initHeroVideo() {
+      var video = document.getElementById('heroVideo');
+      if (!video) return;
+
+      // HTML5 video attributes for aggressive mobile and desktop autoplay
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.setAttribute('autoplay', '');
+      video.volume = 0;
+
+      var streamUrl = 'https://stream.mux.com/T6oQJQ02cQ6N01TR6iHwZkKFkbepS34dkkIc9iukgy400g.m3u8';
+
+      function playVideo() {
+        video.muted = true;
+        var p = video.play();
+        if (p && typeof p.then === 'function') {
+          p.catch(function () {
+            var resume = function () {
+              video.muted = true;
+              video.play();
+              window.removeEventListener('click', resume);
+              window.removeEventListener('touchstart', resume);
+              window.removeEventListener('scroll', resume);
+            };
+            window.addEventListener('click', resume, { once: true, passive: true });
+            window.addEventListener('touchstart', resume, { once: true, passive: true });
+            window.addEventListener('scroll', resume, { once: true, passive: true });
+          });
+        }
+      }
+
+      function setupStream() {
+        if (window.Hls && Hls.isSupported()) {
+          var hls = new Hls({
+            enableWorker: true,
+            lowLatencyMode: false,
+            autoStartLoad: true
+          });
+          hls.loadSource(streamUrl);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            playVideo();
+          });
+          hls.on(Hls.Events.ERROR, function (event, data) {
+            if (data && data.fatal) {
+              if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                hls.startLoad();
+              } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+                hls.recoverMediaError();
+              }
+            }
+          });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = streamUrl;
+          video.addEventListener('loadedmetadata', function () {
+            playVideo();
+          });
+          playVideo();
+        }
+      }
+
+      if (window.Hls || video.canPlayType('application/vnd.apple.mpegurl')) {
+        setupStream();
+      } else {
+        var s = document.createElement('script');
+        s.src = 'libs/hls.min.js';
+        s.onload = setupStream;
+        s.onerror = function () {
+          var s2 = document.createElement('script');
+          s2.src = 'https://cdn.jsdelivr.net/npm/hls.js@latest';
+          s2.onload = setupStream;
+          document.head.appendChild(s2);
+        };
+        document.head.appendChild(s);
+      }
+
+      document.addEventListener('DOMContentLoaded', playVideo);
+      window.addEventListener('load', playVideo);
+    })();
+
+    // Stats count-up animation
+    (function initCounters() {
+      var counters = document.querySelectorAll('.count-up');
+      if (!counters.length) return;
+
+      var animated = false;
+      function runCount() {
+        if (animated) return;
+        animated = true;
+        counters.forEach(function (el) {
+          var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+          var duration = 1400; // ms
+          var start = 0;
+          var startTime = null;
+
+          function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var ease = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(ease * target);
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            } else {
+              el.textContent = target;
+            }
+          }
+          requestAnimationFrame(step);
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var strip = document.querySelector('.stats-strip');
+        var observer = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) {
+            runCount();
+            observer.disconnect();
+          }
+        }, { threshold: 0.2 });
+        if (strip) observer.observe(strip);
+        else runCount();
+      } else {
+        runCount();
+      }
+    })();
+
+    // Interactive SaaS Workflow Demo Tabs
+    (function initWorkflowDemo() {
+      var tabs = document.querySelectorAll('.flow-tab-btn');
+      if (!tabs.length) return;
+
+      var stages = [
+        {
+          badge: "STAGE 01 // DISCOVERY",
+          title: "Free, confidential scoping call",
+          desc: "We define target perimeters, compliance constraints, testing windows, and rules of engagement (RoE). Zero sales fluff — direct technical dialogue with an offensive lead.",
+          deliverables: [
+            "Defined IP ranges, domains & API endpoints",
+            "Signed mutual NDA & customized RoE agreement",
+            "Explicit exclusion lists & emergency kill-switch"
+          ],
+          hint: "Turnaround: Scoping call within 24h • No credit card or commitment",
+          terminalFile: "bytes-encrypt/pipeline: stage-01-scoping.sh",
+          terminalStatus: "● CONNECTED",
+          terminalHtml: '<div class="t-comment"># Initializing confidential engagement telemetry...</div>' +
+            '<div class="t-cmd">bytesec scope init --target="client-perimeter" --tier=deep</div><br>' +
+            '<div>[<span class="t-success">AUTH</span>] Mutual NDA verified &bull; GPG key exchanged</div>' +
+            '<div>[<span class="t-key">TARGET</span>] 14 web endpoints, 4 microservices, 2 AWS VPCs</div>' +
+            '<div>[<span class="t-key">POLICY</span>] Production-safe testing window: 22:00 - 05:00 UTC</div>' +
+            '<div>[<span class="t-warn">STATUS</span>] Scoping dossier compiled &rarr; generating quote matrix</div><br>' +
+            '<div class="t-comment"># Ready for automated fixed-quote calculation in 48 hours.</div>'
+        },
+        {
+          badge: "STAGE 02 // PROPOSAL",
+          title: "Fixed-price quote within 48h",
+          desc: "No vague day-rates, no surprise invoice creep. You get an all-inclusive binding quote that guarantees exact testing scope, lead auditor profile, and one free retest.",
+          deliverables: [
+            "Guaranteed binding price & dedicated timeline",
+            "Named senior OSCP / CREST certified lead",
+            "Included free 30-day verification retest"
+          ],
+          hint: "Transparent commitment • 100% price certainty before any work starts",
+          terminalFile: "bytes-encrypt/proposal: quote-generator.json",
+          terminalStatus: "● LOCKED_PRICING",
+          terminalHtml: '<div class="t-comment"># Generating binding scope and methodology commitment...</div>' +
+            '<div class="t-cmd">bytesec proposal generate --binding-quote=EUR --lock-days=30</div><br>' +
+            '<div>{</div>' +
+            '<div>&nbsp;&nbsp;<span class="t-key">"pricing_model"</span>: <span class="t-val">"FIXED_FEE_ALL_INCLUSIVE"</span>,</div>' +
+            '<div>&nbsp;&nbsp;<span class="t-key">"retest_included"</span>: <span class="t-success">true</span>,</div>' +
+            '<div>&nbsp;&nbsp;<span class="t-key">"lead_certification"</span>: <span class="t-val">["OSCP", "OSWE", "CREST-CRT"]</span>,</div>' +
+            '<div>&nbsp;&nbsp;<span class="t-key">"deliverables"</span>: <span class="t-val">["Executive Summary", "Technical PoC", "Remediation Call"]</span></div>' +
+            '<div>}</div><br>' +
+            '<div>[<span class="t-success">OK</span>] Proposal dispatched. Zero risk, binding agreement.</div>'
+        },
+        {
+          badge: "STAGE 03 // SETUP",
+          title: "Safe environment onboarding & kickoff",
+          desc: "We confirm test accounts, emergency communication channels, and allowlisting parameters. We test zero-footprint fail-safes so your live infrastructure stays 100% protected.",
+          deliverables: [
+            "Static egress tester IPs for security allowlisting",
+            "Encrypted direct Slack / Teams war-room bridge",
+            "Pre-flight health check to prevent service disruption"
+          ],
+          hint: "Zero downtime guarantee • Immediate direct engineer access",
+          terminalFile: "bytes-encrypt/telemetry: preflight-check.py",
+          terminalStatus: "● HEALTH_OK",
+          terminalHtml: '<div class="t-comment"># Executing non-destructive pre-flight connectivity verification...</div>' +
+            '<div class="t-cmd">python3 preflight_runner.py --egress-check --silent</div><br>' +
+            '<div>[<span class="t-key">EGRESS</span>] Source IP 185.193.125.44 allowlisted in WAF &bull; [<span class="t-success">PASS</span>]</div>' +
+            '<div>[<span class="t-key">WAR-ROOM</span>] Dedicated encrypted bridge sync: #bytesec-client-ops</div>' +
+            '<div>[<span class="t-key">SAFETY</span>] Throttling cap enabled (max 50 req/sec) to protect production</div>' +
+            '<div>[<span class="t-success">READY</span>] Kickoff checklist validated &bull; Offensive testing unlocked</div>'
+        },
+        {
+          badge: "STAGE 04 // EXECUTION",
+          title: "Manual offensive testing & zero-day analysis",
+          desc: "Human penetration testers manually hunt for auth bypasses, complex business logic flaws, and RCEs that scanners overlook. Critical findings are flagged immediately in real time.",
+          deliverables: [
+            "Real-time instant alert on any critical finding",
+            "Business logic manipulation & chained attack vectors",
+            "Live evidence collection with verified reproduction steps"
+          ],
+          hint: "Manual offensive research • Never just a commoditized scanner dump",
+          terminalFile: "bytes-encrypt/live-ops: offensive-feed.log",
+          terminalStatus: "● ACTIVE_EXPLOITATION",
+          terminalHtml: '<div class="t-comment"># Simulating targeted manual adversarial attack vectors...</div>' +
+            '<div class="t-cmd">bytesec run attack-chain --module=auth_bypass --deep-logic</div><br>' +
+            '<div>[<span class="t-key">TRACE</span>] Testing OAuth state parameter entropy... [<span class="t-success">SECURE</span>]</div>' +
+            '<div>[<span class="t-warn">VULN</span>] Chained IDOR found: /api/v2/tenant/billing_token</div>' +
+            '<div>[<span class="t-warn">CRITICAL</span>] Tenant boundary escape validated in sandbox replica!</div>' +
+            '<div>[<span class="t-success">DISPATCH</span>] Immediate advisory ping sent to client lead via Slack</div>'
+        },
+        {
+          badge: "STAGE 05 // RESOLUTION",
+          title: "Audit-ready report & free verified retest",
+          desc: "Receive an executive board summary, developer remediation guides with copy-paste code patches, and an official attestation letter for compliance after your free retest.",
+          deliverables: [
+            "Developer-first remediation guides with exact code diffs",
+            "Executive board summary & NIS-2 / SOC-2 attestation",
+            "Free verification retest to guarantee 100% remediated status"
+          ],
+          hint: "Audit-ready deliverables • Letter of Attestation for insurers & clients",
+          terminalFile: "bytes-encrypt/attestation: cert-generator.sh",
+          terminalStatus: "● VERIFIED_SECURE",
+          terminalHtml: '<div class="t-comment"># Compiling remediation verification audit package...</div>' +
+            '<div class="t-cmd">bytesec audit compile --include-retest --format=pdf,json</div><br>' +
+            '<div>[<span class="t-success">RETEST</span>] Verification run on 8 flagged endpoints &bull; [<span class="t-success">ALL RESOLVED</span>]</div>' +
+            '<div>[<span class="t-key">REPORT</span>] Board Executive Summary: generated</div>' +
+            '<div>[<span class="t-key">DIFFS</span>] Code remediation guidance: validated by senior architect</div>' +
+            '<div>[<span class="t-success">ATTEST</span>] Signed Letter of Attestation issued: BE-CERT-2026-V88</div>'
+        }
+      ];
+
+      var badgeEl = document.getElementById('flowBadge');
+      var titleEl = document.getElementById('flowTitle');
+      var descEl = document.getElementById('flowDesc');
+      var delivEl = document.getElementById('flowDeliverables');
+      var hintEl = document.getElementById('flowHint');
+      var termTitleEl = document.getElementById('terminalTitle');
+      var termStatusEl = document.getElementById('terminalStatus');
+      var termOutputEl = document.getElementById('terminalOutput');
+      var stageContainer = document.querySelector('.flow-display-stage');
+      var panelEl = document.querySelector('.saas-flow-panel');
+      var timelineSection = document.getElementById('process');
+      var timelinePath = document.getElementById('timelinePathActive');
+      var stageImages = document.querySelectorAll('.workflow-3d-img');
+
+      // Preload all 5 images to prevent flickering
+      var preloadImages = [
+        'images/workflow/stage-01-inquiry.png',
+        'images/workflow/stage-02-fixed-quote.png',
+        'images/workflow/stage-03-kickoff.png',
+        'images/workflow/stage-04-testing.png',
+        'images/workflow/stage-05-report-retest.png'
+      ];
+      preloadImages.forEach(function (src) {
+        var img = new Image();
+        img.src = src;
+      });
+
+      var currentIdx = 0;
+      var timer = null;
+      var isPaused = false;
+      var cycleDuration = 5000; // 5 seconds per stage
+
+      function renderStage(idx, isAuto) {
+        var previousIdx = currentIdx;
+        currentIdx = idx;
+        var data = stages[idx];
+        if (!data) return;
+
+        // Synchronize Left-Side 3D Images with elegant transition
+        if (stageImages && stageImages.length) {
+          stageImages.forEach(function (img, i) {
+            img.classList.remove('prev');
+            if (i === idx) {
+              img.classList.add('active');
+            } else if (i === previousIdx && i !== idx) {
+              img.classList.remove('active');
+              img.classList.add('prev');
+              // Clear prev class after transition finishes so it resets cleanly
+              setTimeout(function () {
+                img.classList.remove('prev');
+              }, 750);
+            } else {
+              img.classList.remove('active');
+            }
+          });
+        }
+
+        // Update active class on curved timeline stages
+        tabs.forEach(function (b, i) {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+
+          var ringBar = b.querySelector('.progress-ring-bar');
+          if (ringBar) {
+            ringBar.style.animation = 'none';
+            void ringBar.offsetWidth;
+            if (i === idx) {
+              ringBar.style.animation = '';
+            }
+          }
+        });
+
+        var activeTab = tabs[idx];
+        if (activeTab) {
+          activeTab.classList.add('active');
+          activeTab.setAttribute('aria-selected', 'true');
+        }
+
+        // Animate curved connector progress
+        if (timelinePath) {
+          // Total stroke-dasharray is 450. Progress ranges: Stage 0 (360) down to Stage 4 (0)
+          var progressOffsets = [360, 270, 180, 90, 0];
+          timelinePath.style.strokeDashoffset = progressOffsets[idx] !== undefined ? progressOffsets[idx] : 0;
+        }
+
+        if (stageContainer) {
+          stageContainer.classList.add('stage-fading');
+        }
+
+        setTimeout(function () {
+          if (badgeEl) badgeEl.textContent = data.badge;
+          if (titleEl) titleEl.textContent = data.title;
+          if (descEl) descEl.textContent = data.desc;
+          if (hintEl) hintEl.innerHTML = data.hint;
+          if (termTitleEl) termTitleEl.textContent = data.terminalFile;
+          if (termStatusEl) termStatusEl.textContent = data.terminalStatus;
+          if (termOutputEl) termOutputEl.innerHTML = data.terminalHtml;
+
+          if (delivEl) {
+            delivEl.innerHTML = data.deliverables.map(function (item) {
+              return '<li>' + item + '</li>';
+            }).join('');
+          }
+
+          if (stageContainer) {
+            stageContainer.classList.remove('stage-fading');
+          }
+        }, 120);
+      }
+
+      function startAutoCycle() {
+        stopAutoCycle();
+        timer = setInterval(function () {
+          if (!isPaused) {
+            var nextIdx = (currentIdx + 1) % stages.length;
+            renderStage(nextIdx, true);
+          }
+        }, cycleDuration);
+      }
+
+      function stopAutoCycle() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      tabs.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var idx = parseInt(btn.getAttribute('data-step'), 10);
+          renderStage(idx, false);
+          startAutoCycle();
+        });
+      });
+
+      // Pause auto-cycle only when the user is explicitly hovering over the interactive stages
+      var timelineStagesWrap = document.querySelector('.curved-timeline-stages');
+      if (timelineStagesWrap) {
+        timelineStagesWrap.addEventListener('mouseenter', function () { isPaused = true; });
+        timelineStagesWrap.addEventListener('mouseleave', function () { isPaused = false; });
+      }
+
+      if ('IntersectionObserver' in window && timelineSection) {
+        var viewObserver = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) {
+            startAutoCycle();
+          } else {
+            stopAutoCycle();
+          }
+        }, { threshold: 0.1 });
+        viewObserver.observe(timelineSection);
+      } else {
+        startAutoCycle();
+      }
+    })();
+  </script>
+  <script src="libs/gradient-ascii.js"></script>
+  <script src="libs/gradient-text.js"></script>
+  <script src="libs/interference-ribbons.js"></script>
+
+</body>
+
+</html>
