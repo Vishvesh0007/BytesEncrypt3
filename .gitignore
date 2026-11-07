@@ -1,0 +1,14 @@
+# IDE and agent settings/caches
+.agent/
+.agents/
+.gemini/
+.idea/
+.vscode/
+
+# Logs and temp files
+*.log
+tmp/
+
+# OS generated files
+.DS_Store
+Thumbs.db
